@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Coding Week 2026 · Streamlit</title>
+  <title>Coding Week 2026 · Streamlit & persistence</title>
   <link rel="stylesheet" href="vendor/reveal.js/reset.css">
   <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
   <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
@@ -18,7 +18,7 @@
   <div class="r-hstack">
     <img class="stickers" src="assets/stickers.webp" alt="">
     <div style="text-align: left;">
-      <h1>Streamlit: build your page</h1>
+      <h1>Streamlit & persistence</h1>
     </div>
   </div>
   <aside class="notes">
@@ -28,9 +28,16 @@
 </section>
 
 <section>
+  <h2>Part 1 · Streamlit</h2>
+  <p class="lead">Draw the page.</p>
+  <aside class="notes">
+    <p>Transition. Première partie : uniquement Streamlit, ce qui s'affiche et comment la page tourne. Pas de base de données ici.</p>
+  </aside>
+</section>
+
+<section>
   <h2>A page is a Python script</h2>
   <p class="lead">No HTML, no CSS. Each st. call adds something to the page.</p>
-  <div class="r-hstack">
 <pre><code class="language-python" data-trim data-noescape>
 import streamlit as st
 st.title("Example feature")
@@ -38,20 +45,9 @@ name = st.text_input("Add a name")
 if st.button("Add") and name:
     st.success(f"Hello {name}!")
 </code></pre>
-    <div>
-      <p>In every page.py:</p>
-<pre><code class="language-python" data-trim data-noescape>
-db = connect()
-group = current_group(db)
-me = current_participant(db)
-</code></pre>
-      <p>The database, the group and the person chosen in the sidebar.</p>
-    </div>
-  </div>
   <aside class="notes">
-    <p>Minutage : 3:00 (cumul 3:30).</p>
-    <p>Lire le code de gauche ligne à ligne. C'est la page 00_example, presque telle quelle. Chaque appel st.quelque_chose dessine un élément, de haut en bas, dans l'ordre du script.</p>
-    <p>À droite, les trois lignes que toute page de feature contient : la base, le groupe choisi dans la barre latérale, la personne choisie dans « I am ».</p>
+    <p>Minutage : 2:30 (cumul 3:00).</p>
+    <p>Lire le code ligne à ligne. C'est la page 00_example, presque telle quelle. Chaque appel st.quelque_chose dessine un élément, de haut en bas, dans l'ordre du script.</p>
   </aside>
 </section>
 
@@ -69,7 +65,7 @@ st.write(count)
     <table>
       <tr>
         <td><strong>Must it last?</strong></td>
-        <td>Save it in the database, with a function of logic.py.</td>
+        <td>Not in Streamlit: see part 2.</td>
       </tr>
       <tr>
         <td><strong>Only for this page?</strong></td>
@@ -78,11 +74,11 @@ st.write(count)
     </table>
   </div>
   <aside class="notes">
-    <p>Minutage : 4:00 (cumul 7:30).</p>
+    <p>Minutage : 4:00 (cumul 7:00).</p>
     <p>L'idée la plus importante de la matinée. Lire l'exemple : count repart de 0 à chaque clic, la page n'affiche jamais plus que 1. Demander à la salle pourquoi avant de montrer la réponse.</p>
     <p>Les deux sorties, à droite :</p>
     <ul>
-      <li>ce qui doit durer va dans la base de données, par une fonction de logic.py ;</li>
+      <li>ce qui doit durer ne peut pas vivre dans Streamlit : c'est la partie 2, la base de données ;</li>
       <li>une valeur de la page seulement (une étape, un choix temporaire) peut aller dans st.session_state.</li>
     </ul>
     <p>Cette idée explique presque toutes les surprises de la semaine.</p>
@@ -124,41 +120,9 @@ st.write(count)
     </tbody>
   </table>
   <aside class="notes">
-    <p>Minutage : 4:00 (cumul 11:30).</p>
+    <p>Minutage : 4:00 (cumul 11:00).</p>
     <p>Montrer en direct, dans la page 00_example, deux ou trois de ces fonctions. Ne pas tout détailler : la documentation de Streamlit est très bonne, et la fiche reprend la liste.</p>
-    <p>Insister sur la colonne de droite : st.info pour les cas vides (pas encore de tirage, pas de souhaits), st.error pour afficher le message d'une ValueError levée par logic.py.</p>
-  </aside>
-</section>
-
-<section>
-  <h2>page.py asks, logic.py decides</h2>
-  <p class="lead">The page collects and shows. The rules live in logic.py.</p>
-  <div class="r-hstack">
-<pre><code class="language-python" data-trim data-noescape>
-logic = import_module("features.03_wishlist.logic")
-title = st.text_input("Gift idea")
-if st.button("Add"):
-    try:
-        logic.add_wish(db, me["id"], title)
-        st.success("Added")
-    except ValueError as error:
-        st.error(str(error))
-</code></pre>
-    <ol>
-      <li>Ask with widgets.</li>
-      <li>Call one function of logic.py.</li>
-      <li>Show the result, or the error.</li>
-    </ol>
-  </div>
-  <aside class="notes">
-    <p>Minutage : 3:30 (cumul 15:00).</p>
-    <p>Le squelette du guide étudiant, section 3. Trois choses à montrer :</p>
-    <ul>
-      <li>import_module : le nom du dossier commence par un chiffre, un import classique est impossible ;</li>
-      <li>la page appelle une fonction de logic.py, jamais de calcul dans la page (une boucle, une somme : c'est pour logic.py, là où les tests l'atteignent) ;</li>
-      <li>logic.py lève une ValueError avec un message clair ; la page l'attrape et l'affiche avec st.error.</li>
-    </ul>
-    <p>Exemple tiré de 03_wishlist : add_wish.</p>
+    <p>Insister sur la colonne de droite : st.info pour les cas vides (pas encore de tirage, pas de souhaits), st.error quand quelque chose ne va pas (on verra à la fin d'où viennent ces erreurs).</p>
   </aside>
 </section>
 
@@ -172,7 +136,7 @@ with st.form("new_wish"):
     price = st.number_input("Price", min_value=0.0)
     sent = st.form_submit_button("Save")
 if sent:
-    logic.add_wish(db, me["id"], title, price)
+    st.success(f"{title}: {price} €")
 </code></pre>
     <table>
       <tr>
@@ -183,15 +147,11 @@ if sent:
         <td><strong>Clicking Save</strong></td>
         <td>All fields arrive together.</td>
       </tr>
-      <tr>
-        <td><strong>In the database</strong></td>
-        <td>The value survives the click.</td>
-      </tr>
     </table>
   </div>
   <aside class="notes">
-    <p>Minutage : 6:00 (cumul 6:15).</p>
-    <p>Lire l'exemple : le formulaire regroupe les champs, et la page ne se relance qu'au clic sur le bouton du formulaire. Taper dans un champ ne relance plus rien. Puis la fonction de logic.py enregistre en base : la valeur survit au clic, et même au redémarrage.</p>
+    <p>Minutage : 6:00 (cumul 17:00).</p>
+    <p>Lire l'exemple : le formulaire regroupe les champs, et la page ne se relance qu'au clic sur le bouton du formulaire. Taper dans un champ ne relance plus rien. Au clic, tous les champs arrivent ensemble.</p>
     <p>Facultatif, s'il reste du temps : montrer une page d'équipe réussie, repérée pendant l'atelier par les encadrants.</p>
   </aside>
 </section>
@@ -227,7 +187,7 @@ with st.expander("Organizer view"):
   </div>
   <p>Keep the secret: the full draw only ever goes inside an Organizer view.</p>
   <aside class="notes">
-    <p>Minutage : 6:00 (cumul 12:15).</p>
+    <p>Minutage : 6:00 (cumul 23:00).</p>
     <p>Trois fonctions de mise en page, montrées en direct si possible.</p>
     <ul>
       <li>st.columns : des métriques côte à côte.</li>
@@ -239,11 +199,133 @@ with st.expander("Organizer view"):
 </section>
 
 <section>
+  <h2>Part 2 · The database</h2>
+  <p class="lead">Keep the data.</p>
+  <aside class="notes">
+    <p>Transition. Deuxième partie : la base de données, ce qui survit au clic et au redémarrage. On répond ici à la question laissée ouverte par « Every click runs it again ».</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Database, table, column, row</h2>
+  <p class="lead">A database is a set of tables. A table looks like a spreadsheet.</p>
+  <div class="r-hstack">
+    <ul>
+      <li><strong>Database</strong>: a file that keeps the data, between clicks and restarts.</li>
+      <li><strong>Table</strong>: one kind of thing: groups, participants, wishes.</li>
+      <li><strong>Column</strong>: one property, with a type.</li>
+      <li><strong>Row</strong>: one or several columns resulting from a query.</li>
+    </ul>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 25:00).</p>
+    <p>Pour ceux qui n'ont jamais vu de base de données. L'image du tableur suffit : une table = un onglet, une colonne = une colonne typée, une ligne = un élément.</p>
+    <p>Deux colonnes à faire remarquer :</p>
+    <ul>
+      <li>id : un numéro unique par ligne, donné par la base (la clé primaire) ;</li>
+      <li>group_id : le numéro d'une ligne d'une autre table. C'est comme ça que les tables se relient : Alice, Bruno et Chloé sont dans le groupe 1, « Office party ».</li>
+    </ul>
+  </aside>
+</section>
+
+<section>
+  <h2>SQLite: a database in one file</h2>
+  <p class="lead">Everything lives in app/data/app.db.</p>
+  <div class="r-hstack cards">
+    <div class="card" style="--c: var(--pink);">
+      <h3>One file</h3>
+      <p>No server to start. Delete app.db: the app rebuilds it with the demo groups.</p>
+    </div>
+    <div class="card" style="--c: var(--purple);">
+      <h3>Already in Python</h3>
+      <p><code>import sqlite3</code>. Nothing to install, on any laptop.</p>
+    </div>
+    <div class="card" style="--c: var(--violet);">
+      <h3>Real SQL</h3>
+      <p>Same tables and rules as the big databases: NOT NULL, UNIQUE, links between tables.</p>
+    </div>
+  </div>
+  <p>The tests use their own temporary database: your data stays safe.</p>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 27:00).</p>
+    <p>Pourquoi SQLite ici, plutôt que PostgreSQL ou un service cloud :</p>
+    <ul>
+      <li>un seul fichier, pas de serveur, pas de compte : on clone, on lance, ça marche ;</li>
+      <li>le module sqlite3 est livré avec Python ;</li>
+      <li>c'est du vrai SQL : ce qu'ils apprennent ici sert ailleurs.</li>
+    </ul>
+    <p>Les tests passent par la variable SANTA_DB : ils écrivent dans une base jetable, jamais dans app.db.</p>
+    <p>La limite : une seule machine, peu d'écritures en même temps. Pour un Secret Santa, c'est largement assez.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>tables.py: the database without SQL</h2>
+  <p class="lead">A table name and a dictionary. That's all.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+find(db, "wishes", {"participant_id": me["id"]}, order_by="-price")
+find_one(db, "groups", {"id": 3})
+count(db, "wishes", {"participant_id": 5})
+insert(db, "wishes", {"participant_id": 5, "title": "Book"})
+update(db, "groups", {"budget": 30}, {"id": 3})
+delete(db, "wishes", {"id": 12})
+create_table(db, "example_names", {"name": "TEXT NOT NULL"})
+</code></pre>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 4:00 (cumul 32:30).</p>
+    <p>app/tables.py est un module, pas une classe : une fonction par action, qui écrit le SQL à leur place. On n'a pas besoin de connaître SQL pour finir le niveau 1.</p>
+    <ul>
+      <li>find renvoie une liste de lignes (vide s'il n'y en a pas), find_one une ligne ou None, count un nombre, insert l'id de la nouvelle ligne.</li>
+      <li>where : chaque paire doit correspondre (ET). None veut dire « vide » (NULL), une liste veut dire « une de ces valeurs ».</li>
+      <li>order_by : "name", ou "-price" pour le plus grand d'abord.</li>
+      <li>Pas de comparaison (« prix supérieur à 10 ») ni de jointure : on récupère les lignes et on filtre en Python. index_by transforme une liste en dictionnaire par id, pour retrouver un nom à partir d'un participant_id.</li>
+      <li>Sécurité : les valeurs partent toujours à part (les ? de sqlite3). Un nom comme « x'; DROP TABLE users » reste un simple texte.</li>
+      <li>update et delete exigent un where : impossible de vider une table par erreur.</li>
+      <li>create_table ajoute une colonne id tout seul, et ne fait rien si la table existe déjà : on peut l'appeler à chaque démarrage.</li>
+    </ul>
+    <p>Besoin d'autre chose ? db.execute("...", (valeurs,)) marche toujours, avec un ? par valeur.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>page.py asks, logic.py decides</h2>
+  <p class="lead">The page collects and shows. The rules live in logic.py.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+logic = import_module("features.03_wishlist.logic")
+title = st.text_input("Gift idea")
+if st.button("Add"):
+    try:
+        logic.add_wish(db, me["id"], title)
+        st.success("Added")
+    except ValueError as error:
+        st.error(str(error))
+</code></pre>
+    <ol>
+      <li>Ask with widgets.</li>
+      <li>Call one function of logic.py.</li>
+      <li>Show the result, or the error.</li>
+    </ol>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 3:30 (cumul 36:00).</p>
+    <p>La slide qui assemble les deux parties : Streamlit pour demander et afficher, logic.py et la base pour décider et garder. C'est le squelette du guide étudiant, section 3. Trois choses à montrer :</p>
+    <ul>
+      <li>import_module : le nom du dossier commence par un chiffre, un import classique est impossible ;</li>
+      <li>la page appelle une fonction de logic.py, jamais de calcul dans la page (une boucle, une somme : c'est pour logic.py, là où les tests l'atteignent) ;</li>
+      <li>logic.py lève une ValueError avec un message clair ; la page l'attrape et l'affiche avec st.error.</li>
+    </ul>
+    <p>Exemple tiré de 03_wishlist : add_wish.</p>
+  </aside>
+</section>
+
+<section>
   <div class="r-hstack">
     <img class="stickers" src="assets/stickers.webp" alt="">
     <div>
-      <h2>Code time</h2>
-      <p>Still without AI.</p>
+      <h2>Code time !</h2>
     </div>
   </div>
   <aside class="notes">
