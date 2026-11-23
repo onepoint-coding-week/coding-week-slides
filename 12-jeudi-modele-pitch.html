@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Your pitch</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>Your pitch: one slide, five minutes</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>This file is the model of your pitch. Keep only its last slide, fill it in, and write your script in the notes of that slide: who says what, and when you hand over.</p>
+    <p>Before 17:00, check three things: the demo is at the centre of your five minutes, you know where the second presenter takes over, and a short video of your demo is ready.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>5 minutes, 2 presenters</h2>
+  <p class="lead">Show what it does first. Never start with the architecture.</p>
+  <table>
+    <tr><td>0:30</td><td><strong>The problem</strong></td><td>One sentence.</td></tr>
+    <tr><td>2:00</td><td><strong>The demo</strong></td><td>Your page, live.</td></tr>
+    <tr><td>1:00</td><td><strong>What it changes</strong></td><td>For the user.</td></tr>
+    <tr><td>1:00</td><td><strong>One difficulty</strong></td><td>And how you solved it.</td></tr>
+    <tr><td>0:30</td><td><strong>Conclusion</strong></td><td>One sentence.</td></tr>
+  </table>
+  <aside class="notes">
+    <p>The structure is the same for every team: 30 seconds for the problem, 2 minutes for the demo, 1 minute for what it changes for the user, 1 minute for one technical difficulty you solved, 30 seconds to conclude.</p>
+    <p>The 2 minutes of the demo include going from this slide to your page and back: count about 1:45 of demo.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Four mistakes to avoid</h2>
+  <table>
+    <tr><td><strong>Starting with the architecture</strong></td><td>Show what it does first.</td></tr>
+    <tr><td><strong>Reading your notes</strong></td><td>Talk to the room.</td></tr>
+    <tr><td><strong>A live demo with no backup</strong></td><td>Record a short video.</td></tr>
+    <tr><td><strong>Going over 5 minutes</strong></td><td>Rehearse with a timer.</td></tr>
+  </table>
+  <aside class="notes">
+    <p>The structure is the same for every team: 30 seconds for the problem, 2 minutes for the demo, 1 minute for what it changes for the user, 1 minute for one technical difficulty you solved, 30 seconds to conclude.</p>
+    <p>The 2 minutes of the demo include going from this slide to your page and back: count about 1:45 of demo.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Team [XX]: [feature]</h2>
+  <p class="lead">[The problem it solves, in one sentence]</p>
+  <p>[A screenshot of your page]<br>The demo is live. The video is the backup.</p>
+  <ol>
+    <li><strong>What it changes</strong>: [For the user: before, after]</li>
+    <li><strong>One difficulty we solved</strong>: [What was hard, and how]</li>
+    <li><strong>In one sentence</strong>: [Your conclusion]</li>
+  </ol>
+  <aside class="notes">
+    <p>Your script. Write who says what, and when you hand over.</p>
+    <p>0:00 to 0:30, [first presenter]: the problem, in one sentence. Who has it, and why it matters for a Secret Santa.</p>
+    <p>0:30 to 2:30, [first presenter]: the demo. Go to your page, show one real example from start to end, come back to this slide: about 1:45 of demo. If the live demo fails, play your short video.</p>
+    <p>2:30 to 3:30, [second presenter]: what it changes for the user. Before, after.</p>
+    <p>3:30 to 4:30, [second presenter]: one technical difficulty and how you solved it, explained simply. A test that helped, a bug you found, a rule of the project you had to respect.</p>
+    <p>4:30 to 5:00, [second presenter]: the conclusion, in one sentence.</p>
+    <p>One hand-over only, at 2:30: the first presenter does the problem and the demo, the second does the rest.</p>
+    <p>Hand-over: [the exact sentence where the second presenter takes over].</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes],
+  });
+</script>
+</body>
+</html>

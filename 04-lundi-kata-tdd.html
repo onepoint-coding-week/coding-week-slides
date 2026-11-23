@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · TDD kata</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>TDD kata: does the gift fit the budget?</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). Le speaker de la salle, dans chaque grande salle. La fiche du speaker (kata-tdd-fiche-speaker.md) donne le détail et les phrases à dire ; ce deck n'en est que le support.</p>
+    <p>Le but de l'après-midi : que chaque étudiant fasse au moins une boucle rouge, vert, refactor de ses propres mains. Ne pas accélérer sur ces 20 minutes : elles sont calibrées pour les plus lents de la salle.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>What is TDD or Test Driven Development?</h2>
+  <p>Test Driven Development is a technique where you write your test cases BEFORE you write any implementation.</p>
+  <p>Tests drive and dictate the code that is developed.</p>
+  <p>It is:</p>
+  <ul>
+    <li>An indication of intent</li>
+    <li>A living specification for your application</li>
+  </ul>
+  <p>Some might argue that the tests are part of the documentation!</p>
+</section>
+
+<section>
+  <h2>What is a KATA?</h2>
+  <p>A kata is a small, self-contained coding exercise that you repeat to practise a technique. The word comes from MARTIAL ARTS!</p>
+  <p>In programming, a kata usually has:</p>
+  <ul>
+    <li>A tiny, well-defined problem.</li>
+    <li>A focus on how you code, not what you build.</li>
+    <li>Short time-boxes, sometimes done in pairs (one types, the other guides) and redone from scratch to try a different approach.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>On your computers:</h2>
+  <p>Retrieve this file here from your repository:</p>
+  <p><code>/secret-santa/docs/kata-tdd.pdf</code></p>
+  <p>This file will help you throughout the KATA (commands, key concepts…).</p>
+</section>
+
+<section>
+  <h2>The loop</h2>
+  <p class="lead">Test, code, validate test, clean up. REPEAT.</p>
+  <ol>
+    <li><strong>Red</strong>: Write one test. Run it: it fails.</li>
+    <li><strong>Green</strong>: Write the simplest code that makes it pass.</li>
+    <li><strong>Refactor</strong>: Clean up if necessary. Run again: still green.</li>
+  </ol>
+  <p>A test you never saw fail proves nothing! Make sure you get a failing test before starting to write your code.</p>
+  <aside class="notes">
+    <p>Minutage : 1:30 (cumul 4:30).</p>
+    <p>Lire les trois étapes. Insister sur la première : un test qu'on n'a jamais vu échouer ne prouve rien. Et sur la deuxième : le code le plus simple, même s'il a l'air bête. Le test suivant obligera à faire mieux.</p>
+    <p>Puis passer à la démonstration : on fait le cycle 1 en entier.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Write the test first, then write the function</h2>
+  <p class="lead">The test drives what you need to code.</p>
+  <ol>
+    <li>As you sit down, run:
+      <pre><code class="language-bash" data-trim data-noescape>
+uv run python tools/start_kata.py
+uv run pytest kata
+      </code></pre>
+      <p>This creates kata/, with two empty files. Git ignores it.</p>
+    </li>
+    <li>The function to write:
+      <pre><code class="language-python" data-trim data-noescape>
+def gift_fits(price: float, budget: float) -> bool:
+      </code></pre>
+      <p>Return True if a gift at this price fits the budget.</p>
+    </li>
+  </ol>
+  <aside class="notes">
+    <p>Minutage : 2:30 (cumul 3:00).</p>
+    <p>Afficher cette slide dès 13h55, pendant le retour du déjeuner : chacun lance les deux commandes de gauche en s'asseyant. À 14h00, passer la couverture en une phrase, puis revenir ici. Une machine qui ne répond pas se voit tout de suite, et part au stand « Dr ordinateur ».</p>
+    <p>Dire : "Today you will write one tiny function, and you will not write a single line of it before a test asks for it."</p>
+    <p>Le dossier kata/ est ignoré par git : rien n'y est commité, rien ne peut casser. Puis les yeux sur l'écran.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Demonstration: Cycle 1</h2>
+  <p class="lead">First test to write and validate, then move on to Cycle 2 &amp; 3 (view PDF)</p>
+  <div class="r-hstack">
+    <div>
+      <pre><code class="language-python" data-trim data-noescape>
+# kata/test_gift.py
+from gift import gift_fits
+def test_a_gift_under_the_budget_fits():
+    assert gift_fits(15, 20) is True
+      </code></pre>
+      <p>The test name is a sentence: what the code must do.</p>
+    </div>
+    <table>
+      <tr>
+        <td><strong>Red</strong></td>
+        <td>ImportError: no function yet</td>
+      </tr>
+      <tr>
+        <td><strong>Red</strong></td>
+        <td>assert None is True: wrong answer</td>
+      </tr>
+      <tr>
+        <td><strong>Green</strong></td>
+        <td>return True: the simplest code</td>
+      </tr>
+      <tr>
+        <td><strong>Refactor</strong></td>
+        <td>types and a docstring</td>
+      </tr>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 12:00 (cumul 16:30). La démonstration, en direct, dans l'éditeur et le terminal côte à côte, police très grande.</p>
+    <p>Suivre la fiche du speaker, étapes 2 à 6, et dire les phrases telles quelles :</p>
+    <ul>
+      <li>Le test : "The name of the test is a sentence: it says what the code must do. I describe WHAT I want, not HOW."</li>
+      <li>Premier rouge, ImportError : "Red. This is not a mistake: the test tells me the function does not exist yet. Red is my shopping list."</li>
+      <li>Deuxième rouge, avec pass : "Still red, but the message changed: now the function exists, and it gives the wrong answer. Always read the red message."</li>
+      <li>Vert avec return True. Laisser réagir la salle : "Yes, return True. It is the simplest code that makes the test pass. If I write more, I write code that no test checks. The next test will force me to do better."</li>
+      <li>Refactor : les types et la docstring, toujours vert. "Refactor means: the behaviour does not change, and the tests prove it. In your feature, this is when you commit."</li>
+    </ul>
+    <p>La slide reste affichée pendant la démo : elle rappelle les étapes. Tout ce qu'elle montre est déjà dans l'énoncé des étudiants.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Your turn: three cycles</h2>
+  <p class="lead">Work in pairs inside your team. One group of three if needed.</p>
+  <table>
+    <tr>
+      <td><strong>Firstly</strong></td>
+      <td>Cycles 1 and 2. In pairs. Swap the keyboard.</td>
+      <td><code>gift_fits(25, 20)  # -&gt; False</code></td>
+    </tr>
+    <tr>
+      <td><strong>Secondly</strong></td>
+      <td>Cycle 3. Alone, on your laptop.</td>
+      <td><code>gift_fits(-5, 20)  # -&gt; ValueError</code></td>
+    </tr>
+    <tr>
+      <td><strong>Finally</strong></td>
+      <td>Back here. Correction together.</td>
+      <td></td>
+    </tr>
+  </table>
+  <p>The less confident one types. The other guides, hands off the keyboard.</p>
+  <p>Before any code, ask: "Show me the red test."</p>
+  <p>Done early? Bonuses B1 to B4 in the README.</p>
+  <aside class="notes">
+    <p>Minutage : 3:30 (cumul 20:00).</p>
+    <p>Donner les règles des binômes, lentement, en les montrant :</p>
+    <ul>
+      <li>Le moins à l'aise tape en premier. L'autre guide, mains loin du clavier : toute idée passe par les mains de l'autre.</li>
+      <li>On change de clavier à chaque cycle. Dans un trio, chacun son tour.</li>
+      <li>Avant qu'une ligne de code soit écrite, le guide demande « Show me the red test ».</li>
+    </ul>
+    <p>Puis les trois cycles et leurs horaires. Le cycle 1 est rejoué en binôme, à retaper, pas à copier : l'énoncé le reprend pas à pas. Au cycle 3, chacun sur sa propre machine, après avoir retapé les deux premiers tests.</p>
+    <p>Les plus rapides : les bonus B1 à B4 de l'énoncé, dans l'ordre, après avoir montré un test rouge à un encadrant.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Correction</h2>
+  <p class="lead">Cycle 3 together. Then a trap. Then what comes next.</p>
+  <aside class="notes">
+    <p>Minutage : 0:15 (début de la clôture, 10 minutes en tout).</p>
+    <p>Deux minutes avant (15h03), les encadrants passent dans les équipes : « Back in 2 minutes ». Le speaker affiche déjà cette slide. À 15h05, reprendre la salle. Les binômes qui n'ont pas fini le cycle 3 le termineront en regardant le tableau.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Cycle 3, on the board</h2>
+  <p class="lead">A negative price is a mistake.</p>
+  <pre><code class="language-python" data-trim data-noescape>
+import pytest
+def test_a_negative_price_is_a_mistake():
+    with pytest.raises(ValueError):
+        gift_fits(-5, 20)
+  </code></pre>
+  <table>
+    <tr>
+      <td><strong>Red</strong></td>
+      <td>No error yet: the test fails.</td>
+    </tr>
+    <tr>
+      <td><strong>Green</strong></td>
+      <td>Add the check in gift.py.</td>
+    </tr>
+    <tr>
+      <td><strong>Refactor</strong></td>
+      <td>Still green? Three tests now protect the function.</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 4:00 (cumul 4:15).</p>
+    <p>En direct : écrire le test avec pytest.raises, le lancer, le voir rouge. Puis écrire le code au tableau : le if qui lève ValueError, avant le return. Relancer : vert. Ce code-là n'est pas sur la slide, il s'écrit en direct.</p>
+    <p>Demander à la salle où placer le if, et pourquoi avant le return. Rappeler : un test qui attend une erreur ne passe que si l'erreur est levée.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The cents trap</h2>
+  <p class="lead">Bonus B1 hid a surprise. Did you find it?</p>
+  <pre><code class="language-plaintext" data-trim data-noescape>
+&gt;&gt;&gt; 0.1 + 0.2 &lt;= 0.3
+False
+&gt;&gt;&gt; 0.1 + 0.2
+0.30000000000000004
+  </code></pre>
+  <p>Two items at 0.10 and 0.20 don't fit a budget of 0.30.</p>
+  <p>A computer stores most decimals with a tiny error.</p>
+  <p>Question: how would you count money?</p>
+  <aside class="notes">
+    <p>Minutage : 3:00 (cumul 7:15).</p>
+    <p>Si un binôme l'a trouvé (les encadrants l'ont signalé), le faire venir au tableau et le montrer. Sinon, le montrer soi-même en une ligne dans le terminal Python.</p>
+    <p>Ne pas donner la réponse toute faite : poser la question de la slide. La réponse attendue : compter en centimes, avec des nombres entiers. Ce piège existe dans tous les langages, pas seulement en Python.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Same loop, on your feature</h2>
+  <p class="lead">Your test file tells you what to write.</p>
+  <pre><code class="language-bash" data-trim data-noescape>
+uv run pytest tests/test_05_greeting_card.py
+  </code></pre>
+  <p>Pick one red test → Simplest code → Green → Commit</p>
+  <p>Then the next one. Exactly what you just did with gift_fits.</p>
+  <p>Never change a test to make it pass. Wrong test? Show it to a mentor.</p>
+  <aside class="notes">
+    <p>Minutage : 2:15 (cumul 9:30).</p>
+    <p>Faire le lien avec la suite. Chaque feature a son fichier de tests, tests/test_NN_nom.py, déjà écrit : de 6 à 11 tests. Tant que logic.py n'existe pas, ils sont tous « skipped ». Dès que l'équipe crée logic.py, ils passent au rouge.</p>
+    <p>La boucle est exactement celle du kata : choisir un test rouge, écrire le code le plus simple, le voir vert, relancer tous les tests, commiter. Puis le suivant. Une seule différence : ici, les tests sont déjà écrits. À eux de les lire, phrase par phrase.</p>
+    <p>La phrase de la fiche du speaker, adaptée : "Your test file is your specification. Pick one red test, make it green, commit. Again and again. That is exactly what you just did."</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>Next: Hello Team</h2>
+      <p>Your first pull request on the real project.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 10:00).</p>
+    <p>Enchaîner sur la pull request « Hello Team ».</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>

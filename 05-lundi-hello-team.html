@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Hello Team</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>Hello Team: your first pull request</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). L'encadrant de la salle, dans chaque grande salle, juste après le kata.</p>
+    <p>Ce qui compte, ce n'est pas le code, c'est la chaîne complète : du fork de l'équipe jusqu'au dépôt principal. À 17h00, les pages de toutes les équipes sont projetées devant tout le monde, chacune avec son message.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Our goal: to push our code the main repository!</h2>
+  <p class="lead">Create your feature's page. Make it say hello!</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+# app/features/05_greeting_card/page.py
+import streamlit as st
+st.title("Greeting card")
+st.success("Team 07: Alice, Bob, Chloé")
+</code></pre>
+    <ol>
+      <li><strong>One of you types:</strong> On their own laptop, in front of the team.</li>
+      <li><strong>The others help:</strong> Then they review the pull request on GitHub.</li>
+    </ol>
+  </div>
+  <p>Use your own folder, team number and first names.</p>
+  <p>One pull request per team towards the main repository. First names only: the page goes on the big screen at 17:00</p>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 2:30).</p>
+    <p>Un membre de l'équipe tape, sur son portable, devant les autres. Les autres sont autour, aident et relisent. Une seule pull request par équipe, pas une par personne : six pull requests sur le même fichier, ce seraient des conflits en chaîne.</p>
+    <p>Le fichier : app/features/&lt;leur dossier&gt;/page.py, à créer. Trois lignes suffisent : un titre et un st.success avec les prénoms de l'équipe. Dès qu'un dossier contient un page.py, la page apparaît dans le menu. Prénoms seulement : la page est projetée à 17h00.</p>
+    <p>05_greeting_card et Team 07 sont des exemples : chacun met son propre dossier et son numéro d'équipe.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>One page, one pull request</h2>
+  <p class="lead">Create your feature's page. Make it say hello.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+# app/features/05_greeting_card/page.py
+import streamlit as st
+st.title("Greeting card")
+st.success("Team 07: Alice, Bob, Chloé")
+</code></pre>
+    <ol>
+      <li><strong>One of you types:</strong> On their own laptop, in front of the team.</li>
+      <li><strong>The others help:</strong> Then they review the pull request on GitHub.</li>
+    </ol>
+  </div>
+  <p>Use your own folder, team number and first names.</p>
+  <p>One pull request per team. First names only: the page goes on the big screen at 17:00.</p>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 2:30).</p>
+    <p>Un membre de l'équipe tape, sur son portable, devant les autres. Les autres sont autour, aident et relisent. Une seule pull request par équipe, pas une par personne : six pull requests sur le même fichier, ce seraient des conflits en chaîne.</p>
+    <p>Le fichier : app/features/&lt;leur dossier&gt;/page.py, à créer. Trois lignes suffisent : un titre et un st.success avec les prénoms de l'équipe. Dès qu'un dossier contient un page.py, la page apparaît dans le menu. Prénoms seulement : la page est projetée à 17h00.</p>
+    <p>05_greeting_card et Team 07 sont des exemples : chacun met son propre dossier et son numéro d'équipe.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The whole chain</h2>
+  <p class="lead">Six steps, 45 minutes. Do them in order.</p>
+  <ol>
+    <li><strong>One of you:</strong> Fork the project for the team. Invite the others.</li>
+    <li><strong>Everyone:</strong> Clone the team's fork.</li>
+    <li><strong>At the keyboard:</strong> New branch, page.py, check it in the app.</li>
+    <li><strong>At the keyboard:</strong> Push. Open the pull request to the main project.</li>
+    <li><strong>Team, then mentor:</strong> Checks green, the team reviews, the mentor merges.</li>
+    <li><strong>Everyone:</strong> Sync fork, git pull, run the app. Your names are there.</li>
+  </ol>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 4:30).</p>
+    <p>Parcourir les six étapes, sans détailler les commandes : ce sont celles de l'atelier GitHub de ce matin.</p>
+    <ol>
+      <li>Un membre forke le projet principal pour l'équipe, puis invite les autres comme collaborateurs du fork (Settings, Collaborators). Un étudiant qui le souhaite peut aussi avoir son propre fork.</li>
+      <li>Chacun clone le fork de l'équipe : le clone du vrai projet est ainsi vérifié sur tous les portables dès aujourd'hui.</li>
+      <li>Celui qui tape crée une branche, écrit page.py, lance l'application et vérifie que la page est dans le menu. uv run pytest : tests/test_pages.py ouvre chaque page pour chaque groupe de démo.</li>
+      <li>Il pousse et ouvre la pull request, du fork de l'équipe vers le main du dépôt principal.</li>
+      <li>Les vérifications passent au vert, l'équipe relit dans Files changed, puis appelle l'encadrant, qui relit et fusionne.</li>
+      <li>Chacun clique sur « Sync fork » sur GitHub, fait git pull et lance l'application : les prénoms sont sur la page, sur sa propre machine.</li>
+    </ol>
+    <p>Ceux qui ont fini lisent leur fichier de tests, dans tests/ : c'est le programme de 16h20.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>17:00</h2>
+      <p>Your page on the big screen.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 5:00).</p>
+    <p>Lâcher les équipes. Les encadrants circulent : une vérification rouge se lit avec l'équipe, sans corriger à sa place.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>

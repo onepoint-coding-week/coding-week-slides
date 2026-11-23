@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Cross review</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>Cross review</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:15 (cumul 0:15). L'encadrant de la salle, dans chaque grande salle. Trois minutes au tableau en tout : aller vite, la consigne tient sur une slide.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Review your partner team</h2>
+  <p class="lead">40 minutes, as a team. They review yours at the same time.</p>
+  <ol>
+    <li><strong>Open their pull request</strong>: The latest one, open or merged. On GitHub, tab Files changed.</li>
+    <li><strong>Leave 3 useful comments</strong>: A question, a suggestion, or something you learned. "OK" doesn't count.</li>
+    <li><strong>Answer yours</strong>: Reply to the comments your team gets on its own pull request.</li>
+  </ol>
+  <p>Comment on the code, never on the person. Be precise, and be kind.</p>
+  <aside class="notes">
+    <p>Minutage : 1:30 (cumul 1:45).</p>
+    <p>Relire le code d'une autre équipe, c'est apprendre à lire du code, et à recevoir une critique sans la prendre pour soi.</p>
+    <ul>
+      <li>Ouvrir la dernière pull request de l'équipe binôme sur GitHub, ouverte ou déjà fusionnée, onglet Files changed.</li>
+      <li>Au moins trois commentaires utiles pour l'équipe : une question, une suggestion, ou ce qu'on a appris en lisant. « OK » ne compte pas.</li>
+      <li>Répondre aux commentaires reçus sur sa propre pull request.</li>
+    </ul>
+    <p>Une équipe dont le binôme n'a pas de pull request à relire : l'encadrant arbitre.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Your partner team</h2>
+  <p class="lead">The same partner all week. Sit next to them if you can.</p>
+  <p>Your supervisor gives you the pairs now.</p>
+  <aside class="notes">
+    <p>Minutage : 1:00 (cumul 2:45).</p>
+    <p>Laisser la slide affichée pendant les premières minutes, le temps que chaque équipe trouve son binôme. Les binômes ont été faits par niveaux proches.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>17:25</h2>
+      <p>The brief for Thursday.<br>Until then: review, then back to your code.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:15 (cumul 3:00).</p>
+    <p>À 17h10, retour au code jusqu'à 17h25, puis le brief du jeudi (5 min).</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes],
+  });
+</script>
+</body>
+</html>

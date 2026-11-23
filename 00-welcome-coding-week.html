@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Welcome</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>Welcome</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). Encadrant référent, au salon, juste après les ouvertures Onepoint et Centrale.</p>
+    <p>Dire bonjour, se présenter en une phrase, sourire : c'est leur premier contact avec nous. Annoncer le programme de ces cinq minutes : qui présentera vendredi, trois règles toutes simples, et la semaine en un coup d'œil. Ensuite, place aux machines à 10h00.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes],
+  });
+</script>
+</body>
+</html>

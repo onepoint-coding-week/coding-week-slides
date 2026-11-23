@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Streamlit</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>Streamlit: build your page</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). Le speaker de la salle, dans chaque grande salle, après le talk du matin et le transfert.</p>
+    <p>Un seul atelier ce matin : Streamlit. Lundi, ils n'en ont vu que 5 minutes. Or vendredi, la démo, c'est leur page. Et cet après-midi, l'IA écrira du code de page : il faut savoir le juger avant.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>A page is a Python script</h2>
+  <p class="lead">No HTML, no CSS. Each st. call adds something to the page.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+import streamlit as st
+st.title("Example feature")
+name = st.text_input("Add a name")
+if st.button("Add") and name:
+    st.success(f"Hello {name}!")
+</code></pre>
+    <div>
+      <p>In every page.py:</p>
+<pre><code class="language-python" data-trim data-noescape>
+db = connect()
+group = current_group(db)
+me = current_participant(db)
+</code></pre>
+      <p>The database, the group and the person chosen in the sidebar.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 3:00 (cumul 3:30).</p>
+    <p>Lire le code de gauche ligne à ligne. C'est la page 00_example, presque telle quelle. Chaque appel st.quelque_chose dessine un élément, de haut en bas, dans l'ordre du script.</p>
+    <p>À droite, les trois lignes que toute page de feature contient : la base, le groupe choisi dans la barre latérale, la personne choisie dans « I am ».</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Every click runs it again</h2>
+  <p class="lead">From the first line to the last.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+count = 0
+if st.button("Add one"):
+    count = count + 1
+st.write(count)
+# always 0 or 1. Why?
+</code></pre>
+    <table>
+      <tr>
+        <td><strong>Must it last?</strong></td>
+        <td>Save it in the database, with a function of logic.py.</td>
+      </tr>
+      <tr>
+        <td><strong>Only for this page?</strong></td>
+        <td>Keep it in st.session_state.</td>
+      </tr>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 4:00 (cumul 7:30).</p>
+    <p>L'idée la plus importante de la matinée. Lire l'exemple : count repart de 0 à chaque clic, la page n'affiche jamais plus que 1. Demander à la salle pourquoi avant de montrer la réponse.</p>
+    <p>Les deux sorties, à droite :</p>
+    <ul>
+      <li>ce qui doit durer va dans la base de données, par une fonction de logic.py ;</li>
+      <li>une valeur de la page seulement (une étape, un choix temporaire) peut aller dans st.session_state.</li>
+    </ul>
+    <p>Cette idée explique presque toutes les surprises de la semaine.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The widgets you need</h2>
+  <p class="lead">Ten functions cover almost every page.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Ask</th>
+        <th>Show</th>
+        <th>Tell</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>st.text_input</code>: a text</td>
+        <td><code>st.write</code>: anything</td>
+        <td><code>st.success</code>: it worked</td>
+      </tr>
+      <tr>
+        <td><code>st.number_input</code>: a number</td>
+        <td><code>st.dataframe</code>: a table</td>
+        <td><code>st.info</code>: nothing yet</td>
+      </tr>
+      <tr>
+        <td><code>st.selectbox</code>: one choice</td>
+        <td><code>st.metric</code>: a big number</td>
+        <td><code>st.error</code>: something's wrong</td>
+      </tr>
+      <tr>
+        <td><code>st.button</code>: True on click</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 4:00 (cumul 11:30).</p>
+    <p>Montrer en direct, dans la page 00_example, deux ou trois de ces fonctions. Ne pas tout détailler : la documentation de Streamlit est très bonne, et la fiche reprend la liste.</p>
+    <p>Insister sur la colonne de droite : st.info pour les cas vides (pas encore de tirage, pas de souhaits), st.error pour afficher le message d'une ValueError levée par logic.py.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>page.py asks, logic.py decides</h2>
+  <p class="lead">The page collects and shows. The rules live in logic.py.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+logic = import_module("features.03_wishlist.logic")
+title = st.text_input("Gift idea")
+if st.button("Add"):
+    try:
+        logic.add_wish(db, me["id"], title)
+        st.success("Added")
+    except ValueError as error:
+        st.error(str(error))
+</code></pre>
+    <ol>
+      <li>Ask with widgets.</li>
+      <li>Call one function of logic.py.</li>
+      <li>Show the result, or the error.</li>
+    </ol>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 3:30 (cumul 15:00).</p>
+    <p>Le squelette du guide étudiant, section 3. Trois choses à montrer :</p>
+    <ul>
+      <li>import_module : le nom du dossier commence par un chiffre, un import classique est impossible ;</li>
+      <li>la page appelle une fonction de logic.py, jamais de calcul dans la page (une boucle, une somme : c'est pour logic.py, là où les tests l'atteignent) ;</li>
+      <li>logic.py lève une ValueError avec un message clair ; la page l'attrape et l'affiche avec st.error.</li>
+    </ul>
+    <p>Exemple tiré de 03_wishlist : add_wish.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Your 50 minutes</h2>
+  <p class="lead">On your own page. One of you on page.py, the others on logic.py.</p>
+  <div class="r-hstack cards">
+    <div class="card" style="--c: var(--pink);">
+      <h3>1. A table</h3>
+      <p>Show your data with st.dataframe. The rows come from logic.py.</p>
+    </div>
+    <div class="card" style="--c: var(--purple);">
+      <h3>2. A form</h3>
+      <p>Add something with an input and a button. Show st.success or st.error.</p>
+    </div>
+    <div class="card" style="--c: var(--violet);">
+      <h3>3. Empty cases</h3>
+      <p>No data yet? Say it with st.info. Try the three demo groups.</p>
+    </div>
+  </div>
+  <p>Back here at 10:35. Stuck? Ask your neighbour, then raise your hand.</p>
+  <aside class="notes">
+    <p>Minutage : 5:00 (cumul 20:00).</p>
+    <p>Distribuer la fiche pendant cette slide. Trois exercices, sur leur propre page, dans l'ordre. Une personne de l'équipe sur la page pendant que les autres avancent sur logic.py : c'est la deuxième piste de travail.</p>
+    <p>Le piège à attendre : « ma valeur disparaît après le clic ». Ne pas donner la réponse : renvoyer à la slide 3, puis à la correction de 10h35.</p>
+    <p>Le test automatique tests/test_pages.py ouvre chaque page pour chaque groupe de démo : la page doit s'ouvrir sans erreur, même sans données.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Correction</h2>
+  <p class="lead">Why your value disappeared, and three tricks for a nicer page.</p>
+  <aside class="notes">
+    <p>Minutage : 0:15 (début de la clôture, 15 minutes en tout).</p>
+    <p>Deux minutes avant (10h33), les encadrants passent dans les équipes : « Back in 2 minutes ». Le speaker affiche déjà cette slide. À 10h35, reprendre la salle.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The form</h2>
+  <p class="lead">Several fields, sent together, in one click.</p>
+  <div class="r-hstack">
+<pre><code class="language-python" data-trim data-noescape>
+with st.form("new_wish"):
+    title = st.text_input("Gift idea")
+    price = st.number_input("Price", min_value=0.0)
+    sent = st.form_submit_button("Save")
+if sent:
+    logic.add_wish(db, me["id"], title, price)
+</code></pre>
+    <table>
+      <tr>
+        <td><strong>Typing</strong></td>
+        <td>No rerun while you type.</td>
+      </tr>
+      <tr>
+        <td><strong>Clicking Save</strong></td>
+        <td>All fields arrive together.</td>
+      </tr>
+      <tr>
+        <td><strong>In the database</strong></td>
+        <td>The value survives the click.</td>
+      </tr>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 6:00 (cumul 6:15).</p>
+    <p>Lire l'exemple : le formulaire regroupe les champs, et la page ne se relance qu'au clic sur le bouton du formulaire. Taper dans un champ ne relance plus rien. Puis la fonction de logic.py enregistre en base : la valeur survit au clic, et même au redémarrage.</p>
+    <p>Facultatif, s'il reste du temps : montrer une page d'équipe réussie, repérée pendant l'atelier par les encadrants.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Three tricks for a nicer page</h2>
+  <p class="lead">Optional, but your page is your demo on Friday.</p>
+  <div class="r-hstack cards">
+    <div class="card" style="--c: var(--pink);">
+      <h3>st.columns</h3>
+<pre><code class="language-python" data-trim data-noescape>
+a, b = st.columns(2)
+a.metric("Budget", 20)
+</code></pre>
+      <p>Things side by side.</p>
+    </div>
+    <div class="card" style="--c: var(--purple);">
+      <h3>st.tabs</h3>
+<pre><code class="language-python" data-trim data-noescape>
+t1, t2 = st.tabs(["Me", "All"])
+t1.write("...")
+</code></pre>
+      <p>Several views, one page.</p>
+    </div>
+    <div class="card" style="--c: var(--violet);">
+      <h3>st.expander</h3>
+<pre><code class="language-python" data-trim data-noescape>
+with st.expander("Organizer view"):
+    st.write("...")
+</code></pre>
+      <p>Hidden until clicked.</p>
+    </div>
+  </div>
+  <p>Keep the secret: the full draw only ever goes inside an Organizer view.</p>
+  <aside class="notes">
+    <p>Minutage : 6:00 (cumul 12:15).</p>
+    <p>Trois fonctions de mise en page, montrées en direct si possible.</p>
+    <ul>
+      <li>st.columns : des métriques côte à côte.</li>
+      <li>st.tabs : plusieurs vues sans allonger la page.</li>
+      <li>st.expander : un bloc replié. C'est là, et seulement là, que peut vivre une « Organizer view » du tirage : le secret doit être gardé.</li>
+    </ul>
+    <p>Rappel : vendredi, la démo de 2 minutes, c'est leur page.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>11:10: code time</h2>
+      <p>Still without AI.</p>
+      <p>The Assistant opens at 14:00.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 2:45 (cumul 15:00).</p>
+    <p>Pause à 10h50. À 11h10, développement sans IA jusqu'au déjeuner : finir le niveau 1, entamer le niveau 2. L'Assistant ouvre à 14h00.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>

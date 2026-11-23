@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · How the app is built</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>How the app is built</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). Le speaker de la salle, dans chaque grande salle, juste après l'atelier GitHub.</p>
+    <p>Ils connaissent leur feature depuis 10h20. Le but, en une phrase : qu'ils sachent où leur code va vivre et comment il arrive à l'écran. Montrer plus qu'expliquer : la démo prend un tiers du temps.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>One app</h2>
+  <p class="lead">A Secret Santa app, built by all of you!</p>
+  <p>The frame is already written. Each team builds one page, in its own folder.</p>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 2:30).</p>
+    <p>L'application permet à des groupes (collègues, famille, amis) d'organiser un Secret Santa : chacun rejoint un groupe, écrit sa liste de souhaits, un tirage décide qui offre à qui.</p>
+    <p>Nous avons écrit le cadre : le menu, la barre latérale, la base de données et les données de démo. Chaque équipe écrit une feature, et chaque feature devient une page du menu. Une équipe en retard ne bloque personne : une feature pas encore finie n'apparaît simplement pas.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Your folder</h2>
+  <p class="lead">The logic, the page and the specification (tests).</p>
+  <table>
+    <tr>
+      <td><code>app/features/05_greeting_card/logic.py</code></td>
+      <td>The functions that do the work.</td>
+      <td>you write it · tested</td>
+    </tr>
+    <tr>
+      <td><code>app/features/05_greeting_card/page.py</code></td>
+      <td>The web page: widgets that call logic.py.</td>
+      <td>you write it</td>
+    </tr>
+    <tr>
+      <td><code>tests/test_05_greeting_card.py</code></td>
+      <td>Each test is a sentence: what your code must do.</td>
+      <td>already written</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 4:00 (cumul 6:30).</p>
+    <p>Prendre l'exemple d'une feature, 05_greeting_card ; chacun remplace par la sienne.</p>
+    <ul>
+      <li>logic.py : des fonctions Python simples, sans Streamlit. Elles reçoivent la base et des valeurs, elles renvoient des valeurs. C'est là qu'ils vont passer la semaine, et c'est ce que les tests vérifient.</li>
+      <li>page.py : la page web. Des widgets, des appels aux fonctions de logic.py, l'affichage du résultat. Rien de plus.</li>
+      <li>tests/test_05_greeting_card.py : déjà écrit. Chaque test est une phrase qui dit ce que leur code doit faire. C'est leur cahier des charges. Au départ, tout est « skipped », parce que logic.py n'existe pas encore. On y revient à 14h00, avec le kata TDD.</li>
+    </ul>
+    <p>Pourquoi séparer ? Une fonction sans interface se teste et se comprend facilement. Une fois logic.py juste, la page n'est presque que de l'assemblage.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The data you share</h2>
+  <p class="lead">Four tables, already full of demo data. Use them but never change them.</p>
+  <table>
+    <tr>
+      <td><code>groups</code></td>
+      <td>a Secret Santa: name, budget, deadline</td>
+    </tr>
+    <tr>
+      <td><code>participants</code></td>
+      <td>a person in a group</td>
+    </tr>
+    <tr>
+      <td><code>wishes</code></td>
+      <td>one gift idea on a wishlist</td>
+    </tr>
+    <tr>
+      <td><code>assignments</code></td>
+      <td>the draw: who gives to whom</td>
+    </tr>
+  </table>
+  <p>Need more? Create your own table, named after your feature: <code>budget_tracker_expenses</code></p>
+  <p>No SQL needed: find, insert, update, delete, all in tables.py</p>
+  <aside class="notes">
+    <p>Minutage : 3:00 (cumul 9:30).</p>
+    <p>Quatre tables partagées par toutes les features, remplies au démarrage avec trois groupes de démo : Office party, Family Christmas, Book club.</p>
+    <ul>
+      <li>groups : un Secret Santa, avec son budget et sa date limite ;</li>
+      <li>participants : une personne dans un groupe ;</li>
+      <li>wishes : une idée de cadeau sur une liste de souhaits ;</li>
+      <li>assignments : le résultat du tirage, qui offre à qui.</li>
+    </ul>
+    <p>Deux règles :</p>
+    <ul>
+      <li>On ne modifie jamais ces tables : ni colonne ajoutée, ni renommage. Besoin de stocker autre chose ? Sa propre table, dont le nom commence par le nom de la feature, par exemple budget_tracker_expenses.</li>
+      <li>Pour lire et écrire : les fonctions de tables.py, find, insert, update, delete. Pas besoin d'écrire de SQL.</li>
+    </ul>
+  </aside>
+</section>
+
+<section>
+  <h2>Live: the app</h2>
+  <p class="lead">Just watch for now. You'll run it on your own laptop this afternoon.</p>
+  <div class="r-hstack">
+    <div>
+      <pre><code class="language-bash" data-trim data-noescape>
+uv run streamlit run app/app.py
+# stop it with Ctrl+C
+      </code></pre>
+      <p>If the browser doesn't open automatically, go to localhost:8501</p>
+    </div>
+    <ol>
+      <li>The sidebar: pick a group and who you are</li>
+      <li>The menu: one page per feature, in number order</li>
+      <li>02 · Participants: a complete feature to copy</li>
+      <li>Its logic.py and page.py, side by side</li>
+    </ol>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 10:00 (cumul 19:30). Le cœur de la séquence.</p>
+    <p>Démo en direct, sur le portable du speaker. Les étudiants regardent, sans lancer l'application en même temps.</p>
+    <ol>
+      <li>Lancer l'application depuis la racine du projet : le navigateur s'ouvre.</li>
+      <li>La barre latérale : choisir un groupe de démo, puis « I am » : chaque page travaille sur ce groupe et cette personne.</li>
+      <li>Le menu : une page par feature, dans l'ordre des numéros. Une feature sans page.py n'apparaît pas, et l'application ne plante pas.</li>
+      <li>Ouvrir 02_participants, la feature de référence : l'utiliser, puis ouvrir logic.py et page.py côte à côte dans l'éditeur. Montrer qu'un clic sur la page appelle une fonction de logic.py.</li>
+      <li>Montrer 00_example/page.py : une page minuscule, à copier.</li>
+      <li>Arrêter avec Ctrl+C dans le terminal.</li>
+    </ol>
+    <p>Si l'application ne démarre pas sur une machine : le stand « Dr ordinateur » à 12h30, pas maintenant.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Streamlit in one idea</h2>
+  <p class="lead">Web pages in plain Python. No HTML, no CSS.</p>
+  <p>Every click runs your page again, from top to bottom.</p>
+  <p>A plain variable is lost after a click. What must last goes into the database.</p>
+  <table>
+    <tr>
+      <td><code>st.text_input</code></td>
+      <td>a box to type in</td>
+    </tr>
+    <tr>
+      <td><code>st.button</code></td>
+      <td>True on the click</td>
+    </tr>
+    <tr>
+      <td><code>st.dataframe</code></td>
+      <td>a table</td>
+    </tr>
+    <tr>
+      <td><code>st.success</code></td>
+      <td>a green message</td>
+    </tr>
+    <tr>
+      <td><code>st.info</code></td>
+      <td>explain what's missing</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 5:00 (cumul 24:30).</p>
+    <p>Ils ne connaissent pas Streamlit. Une seule idée à retenir : à chaque clic, le script de la page est relancé en entier, de haut en bas. Une variable ordinaire ne survit donc pas à un clic. Ce qui doit durer va dans la base de données (ou dans st.session_state). Cette idée explique presque toutes les surprises de la semaine.</p>
+    <p>Puis les cinq fonctions à connaître, montrées en direct dans la page de 00_example si le temps le permet.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>Questions?</h2>
+      <p>Then lunch. Enjoy!</p>
+      <p>Back at 14:00 for the TDD kata, same room.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 2:30 (cumul 30:00).</p>
+    <p>Les questions, puis le déjeuner. Reprise à 14h00 : le kata TDD, dans la même salle.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>

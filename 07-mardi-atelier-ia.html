@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · AI, how it works</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>AI tools: how they really work</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30. Le speaker de la salle, dans chaque grande salle. À 14h00, l'infra ouvre la page « Assistant » : vérifier sur son portable qu'elle répond avant de commencer.</p>
+    <p>Le but : qu'ils comprennent ce qu'il y a derrière ChatGPT, Claude ou Copilot avant de s'en servir. Pas de maths. Des images simples et un exemple par idée. Ensuite seulement, ils pratiquent.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Inside the box</h2>
+  <p class="lead">ChatGPT, Claude, Copilot, Gemini: different names, the same engine. A language model.</p>
+  <aside class="notes">
+    <p>Minutage : 0:30.</p>
+    <p>Demander à main levée : qui a déjà utilisé ChatGPT ? Claude ? Copilot ? Presque tout le monde. Qui sait ce qui se passe quand on appuie sur Entrée ? Beaucoup moins. C'est l'objet de la première partie.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>A very good guesser</h2>
+  <p class="lead">A language model does one thing: guess the next word.</p>
+  <p>"Merry Christmas and a happy ..."</p>
+  <div class="r-hstack">
+    <table>
+      <tr>
+        <td>New Year</td>
+        <td>92 %</td>
+      </tr>
+      <tr>
+        <td>holiday</td>
+        <td>5 %</td>
+      </tr>
+      <tr>
+        <td>birthday</td>
+        <td>1 %</td>
+      </tr>
+    </table>
+    <ol>
+      <li>Read the text so far.</li>
+      <li>Guess the most likely next word.</li>
+      <li>Add it. Start again.</li>
+    </ol>
+  </div>
+  <p>It doesn't know. It predicts.</p>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Lire la phrase de gauche et faire compléter la salle : « New Year ». Le modèle fait exactement ça, avec des probabilités apprises sur une énorme quantité de textes. Il choisit un mot, l'ajoute, et recommence. Une réponse entière, c'est cette boucle, mot après mot.</p>
+    <p>Précision : il travaille sur des « tokens », des morceaux de mots (environ 3/4 de mot en anglais). C'est aussi l'unité dans laquelle on paye et on mesure les limites.</p>
+    <p>Le message : il ne « sait » pas, il prédit ce qui est plausible. Très souvent juste, parfois faux, toujours avec le même aplomb.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Its only memory: the context</h2>
+  <p class="lead">The model sees one thing: the text sent with your question.</p>
+  <div class="r-hstack">
+    <table>
+      <tr>
+        <td><strong>Hidden instructions</strong></td>
+        <td>set by the tool</td>
+      </tr>
+      <tr>
+        <td><strong>The conversation so far</strong></td>
+        <td>every message, both ways</td>
+      </tr>
+      <tr>
+        <td><strong>What you paste</strong></td>
+        <td>your code, your tests, an error</td>
+      </tr>
+      <tr>
+        <td><strong>Your question</strong></td>
+        <td>the last line</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><strong>New chat?</strong></td>
+        <td>It remembers nothing.</td>
+      </tr>
+      <tr>
+        <td><strong>Your project?</strong></td>
+        <td>It has never seen it. Paste what matters.</td>
+      </tr>
+      <tr>
+        <td><strong>Very long chat?</strong></td>
+        <td>The beginning gets lost.</td>
+      </tr>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Le « contexte », c'est tout le texte envoyé au modèle à chaque message : les instructions cachées de l'outil, toute la conversation, les fichiers collés, et la question. Le modèle n'a pas d'autre mémoire. Il ne connaît pas leur projet, il n'a pas vu leur code, sauf ce qu'on lui colle.</p>
+    <p>Conséquences pratiques :</p>
+    <ul>
+      <li>une nouvelle conversation repart de zéro ;</li>
+      <li>le contexte a une taille maximale : une très longue conversation finit par perdre ses débuts ;</li>
+      <li>pour qu'il respecte les conventions du projet, il faut les lui donner (par exemple coller les tests, ou le guide étudiant).</li>
+    </ul>
+  </aside>
+</section>
+
+<section>
+  <h2>Why it makes things up</h2>
+  <p class="lead">Plausible is not the same as true.</p>
+<pre><code class="language-python" data-trim data-noescape>
+# the AI suggests:
+names = random.shuffle_copy(names)
+# AttributeError: no such function
+</code></pre>
+  <p>Looks right. Doesn't exist.</p>
+  <ol>
+    <li>Read every line</li>
+    <li>Run the tests</li>
+    <li>Ask: why this way?</li>
+  </ol>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Une « hallucination » : une réponse fausse, donnée avec assurance. Ce n'est pas un bug rare, c'est la conséquence directe de la slide précédente : le modèle produit ce qui est plausible.</p>
+    <p>En code, ça donne : une fonction de bibliothèque qui n'existe pas, un paramètre inventé, un test « oublié », un cas limite ignoré. Le code a l'air propre et ne marche pas.</p>
+    <p>La parade : ne jamais croire, toujours vérifier. Lire le code, et lancer les tests. Cette semaine, les tests sont le juge.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The prompt is the spec</h2>
+  <p class="lead">A vague question gets a vague answer.</p>
+  <p>"write a Secret Santa draw in Python"</p>
+  <p>It will guess everything.</p>
+  <table>
+    <tr>
+      <td><strong>Context</strong></td>
+      <td>a Streamlit app, file logic.py</td>
+    </tr>
+    <tr>
+      <td><strong>Task</strong></td>
+      <td>write draw_names(names, rng)</td>
+    </tr>
+    <tr>
+      <td><strong>Rules</strong></td>
+      <td>nobody gives to themselves</td>
+    </tr>
+    <tr>
+      <td><strong>Example</strong></td>
+      <td>paste the tests</td>
+    </tr>
+  </table>
+  <p>Best trick: give it the tests. They say exactly what you want.</p>
+  <aside class="notes">
+    <p>Minutage : 4:00.</p>
+    <p>Comparer les deux prompts. Le premier laisse le modèle deviner tout : le nom de la fonction, ses paramètres, les règles (personne ne s'offre un cadeau à soi-même), le format du résultat. Il devinera, et pas comme nos tests l'attendent.</p>
+    <p>Le second donne les quatre ingrédients :</p>
+    <ul>
+      <li>le contexte : quel projet, quel fichier ;</li>
+      <li>la tâche : une seule, précise ;</li>
+      <li>les contraintes : la signature, les règles, ce qui est interdit ;</li>
+      <li>un exemple ou les tests : le plus efficace de tout.</li>
+    </ul>
+    <p>C'est exactement ce qu'ils vont tester tout à l'heure avec draw_names.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>From chat to agent</h2>
+  <p class="lead">A chat answers. An agent acts. Tools, agents, skills, MCP: the words you keep hearing.</p>
+  <aside class="notes">
+    <p>Minutage : 0:30.</p>
+    <p>Deuxième partie : les mots qu'ils entendent partout. Chacun avec un exemple concret. Jeudi matin, ils écriront eux-mêmes les outils d'un agent : aujourd'hui, ils comprennent l'idée.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Tools: hands for the model</h2>
+  <p class="lead">The model can't do anything. It can only ask.</p>
+  <ol>
+    <li><strong>Model:</strong> "Call run_tests"</li>
+    <li><strong>Program:</strong> runs the tests</li>
+    <li><strong>Result:</strong> "2 failed"</li>
+    <li><strong>Model:</strong> reads it, goes on</li>
+  </ol>
+<pre><code class="language-python" data-trim data-noescape>
+def run_tests(path: str) -&gt; str:
+    """Run pytest on this folder. Return the summary."""
+</code></pre>
+  <p>The docstring is all the model knows about the tool.</p>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Un modèle ne fait que produire du texte. Pour agir, on lui décrit des « outils » : un nom, une description, des paramètres. Quand il en a besoin, il répond par une demande : « appelle run_tests ». C'est le programme autour de lui qui exécute vraiment l'outil, puis lui renvoie le résultat. Le modèle continue avec ce résultat.</p>
+    <p>Exemple du quotidien : quand ChatGPT « cherche sur le web », c'est un outil de recherche appelé pour lui.</p>
+    <p>Point clé pour jeudi : la description de l'outil est tout ce que le modèle en sait. Une description floue, et l'outil n'est jamais appelé.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>An agent is a loop</h2>
+  <p class="lead">Give it a goal. It calls tools until the goal is reached.</p>
+  <p>Goal → Pick a tool → Read the result → Done? (no: again)</p>
+  <p>Goal: "make test_draw pass"</p>
+<pre><code class="language-plaintext" data-trim data-noescape>
+1 read_file('logic.py')
+2 run_tests('tests/')
+  -&gt; 1 failed: KeyError
+3 write_file('logic.py', ...)
+4 run_tests('tests/')
+  -&gt; all passed. Stop.
+</code></pre>
+  <p>It acts on your files: read git diff before you commit.</p>
+  <aside class="notes">
+    <p>Minutage : 4:00.</p>
+    <p>Un agent = un modèle + des outils + une boucle. On lui donne un objectif. À chaque tour, il choisit un outil, lit le résultat, et décide de la suite. Il s'arrête quand l'objectif est atteint, ou après un nombre maximum de tours (10 jeudi).</p>
+    <p>L'exemple de droite est exactement l'atelier de jeudi : « fais passer ce test ». Il lit le fichier, lance les tests, voit l'erreur, corrige, relance.</p>
+    <p>Exemples connus : Claude Code, GitHub Copilot en mode agent, Cursor. Ce ne sont pas de la magie : c'est cette boucle.</p>
+    <p>Ce qui change avec un agent : il agit sur leurs fichiers. Donc on relit git diff avant de commiter. Toujours.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Skills: know-how on demand</h2>
+  <p class="lead">A folder of instructions the agent opens only when it needs it.</p>
+  <div class="r-hstack">
+<pre><code class="language-plaintext" data-trim data-noescape>
+# skills/secret-santa-feature/SKILL.md
+---
+name: secret-santa-feature
+description: Write a feature of the
+  Secret Santa app.
+---
+- Only edit app/features/&lt;yours&gt;/
+- Rules go in logic.py, tested
+- Never show who gives to whom
+</code></pre>
+    <table>
+      <tr>
+        <td><strong>At start</strong></td>
+        <td>The agent reads only the description.</td>
+      </tr>
+      <tr>
+        <td><strong>When it fits</strong></td>
+        <td>It opens the skill and follows it.</td>
+      </tr>
+      <tr>
+        <td><strong>Why</strong></td>
+        <td>The context stays small and clean.</td>
+      </tr>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Une « skill » (chez Claude, et repris par d'autres outils) : un dossier avec un fichier SKILL.md. En haut, un nom et une description d'une ligne. En dessous, les instructions détaillées, et parfois des scripts ou des modèles de fichiers.</p>
+    <p>L'agent ne lit au départ que la description. Quand une tâche correspond, il ouvre la skill et suit ses instructions. Avantage : on n'encombre pas le contexte avec tout, tout le temps (rappel de la slide sur le contexte).</p>
+    <p>Exemple : une skill « secret-santa-feature » qui explique les règles du projet. Autres exemples réels : créer un PowerPoint, remplir un PDF, suivre la charte graphique d'une entreprise.</p>
+    <p>Pas d'utilisation de skills cette semaine : c'est pour comprendre ce qu'ils verront ailleurs.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>MCP: a USB port for AI</h2>
+  <p class="lead">One standard way to plug tools and data into any AI app.</p>
+  <p>Claude, ChatGPT, VS Code → MCP → GitHub, Google Drive, A database</p>
+  <p>Example: "List my open pull requests" → the GitHub MCP server answers.</p>
+  <p>Plugging a server in gives the AI rights. Only trusted ones.</p>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>MCP, Model Context Protocol : un standard ouvert, publié par Anthropic fin 2024, repris depuis par la plupart des outils (Claude, ChatGPT, VS Code, Cursor...). Avant, chaque outil d'IA devait écrire son propre connecteur pour GitHub, pour Google Drive, pour une base de données. Avec MCP, on écrit un « serveur MCP » une seule fois, et toutes les applis compatibles peuvent s'y brancher. L'image : le port USB-C.</p>
+    <p>Un serveur MCP propose des outils (au sens de la slide 8) et des données.</p>
+    <p>Exemple : le serveur MCP de GitHub. Branché sur son assistant, on peut demander « liste mes pull requests ouvertes » : l'assistant appelle l'outil du serveur, qui interroge GitHub.</p>
+    <p>Attention : brancher un serveur MCP, c'est donner des droits à l'IA. Ne brancher que des serveurs de confiance.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Who does what</h2>
+  <p class="lead">Six words to remember.</p>
+  <table>
+    <tr>
+      <td><strong>Model</strong></td>
+      <td>guesses the next word</td>
+    </tr>
+    <tr>
+      <td><strong>Context</strong></td>
+      <td>everything it can see</td>
+    </tr>
+    <tr>
+      <td><strong>Tool</strong></td>
+      <td>an action it can ask for</td>
+    </tr>
+    <tr>
+      <td><strong>Agent</strong></td>
+      <td>a model calling tools in a loop</td>
+    </tr>
+    <tr>
+      <td><strong>Skill</strong></td>
+      <td>instructions opened on demand</td>
+    </tr>
+    <tr>
+      <td><strong>MCP</strong></td>
+      <td>a standard plug for tools and data</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 2:00.</p>
+    <p>Le récapitulatif. Le faire lire à voix haute par un ou deux étudiants si la salle est réveillée.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Your turn, with three rules</h2>
+  <p class="lead">The Assistant is open. Ask it to write draw_names, then run the tests.</p>
+  <div class="r-hstack cards">
+    <div class="card" style="--c: var(--pink);">
+      <h3>1. You own the code</h3>
+      <p>Explain every line you ship.</p>
+    </div>
+    <div class="card" style="--c: var(--purple);">
+      <h3>2. Tests are the judge</h3>
+      <p>Coverage never goes down.</p>
+    </div>
+    <div class="card" style="--c: var(--violet);">
+      <h3>3. No secrets</h3>
+      <p>No password, token or personal data.</p>
+    </div>
+  </div>
+  <p>Use the recipe: context, task, rules, tests.</p>
+  <p>Red tests? Improve your prompt, not the tests.</p>
+  <aside class="notes">
+    <p>Minutage : 3:00.</p>
+    <p>Les trois règles de la semaine :</p>
+    <ol>
+      <li>Vous restez responsables du code que vous livrez. « C'est l'IA qui l'a écrit » n'est pas une réponse, et vendredi, n'importe qui peut être présentateur.</li>
+      <li>Les tests sont le juge, et la couverture ne doit jamais baisser.</li>
+      <li>Jamais de mot de passe, de token ou de donnée personnelle dans un prompt.</li>
+    </ol>
+    <p>Puis l'exercice : avec la page « Assistant », faire écrire draw_names, lancer les tests fournis. Appliquer ce qu'on vient de voir : contexte, tâche, règles, tests collés.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>Questions?</h2>
+      <p>Then open the Assistant.</p>
+      <p>Thursday: you build an agent's tools yourself.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 1:00.</p>
+    <p>Une ou deux questions. Puis la pratique : l'Assistant est ouvert.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>

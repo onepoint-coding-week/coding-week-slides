@@ -1,0 +1,81 @@
+/* Thème Coding Week 2026 : surcharge du thème officiel black.css de reveal.js.
+   La mise en page (centrage, listes, titres) reste celle de reveal.js. */
+
+@font-face { font-family: "Poppins"; font-weight: 300; font-style: normal; src: url("../assets/fonts/poppins-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 300; font-style: italic; src: url("../assets/fonts/poppins-latin-300-italic.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 400; font-style: normal; src: url("../assets/fonts/poppins-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 400; font-style: italic; src: url("../assets/fonts/poppins-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 700; font-style: normal; src: url("../assets/fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 700; font-style: italic; src: url("../assets/fonts/poppins-latin-700-italic.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 900; font-style: normal; src: url("../assets/fonts/poppins-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-weight: 900; font-style: italic; src: url("../assets/fonts/poppins-latin-900-italic.woff2") format("woff2"); }
+
+:root {
+  --pink: #E2037E;
+  --purple: #A02B93;
+  --violet: #6A5BE2;
+  --sky: #49CBFF;
+  --grey: #8A8A95;
+
+  --r-background-color: #0c0a10;
+  --r-main-font: "Poppins", Arial, sans-serif;
+  /* Le deck occupe tout l'écran sans mise à l'échelle : la taille du texte suit l'écran. */
+  --r-main-font-size: min(2vw, 3.6vh);
+  --r-main-color: #D4D4DC;
+  --r-heading-font: "Poppins", Arial, sans-serif;
+  --r-heading-color: #FFFFFF;
+  --r-heading-font-weight: 900;
+  --r-heading-text-transform: none;
+  --r-link-color: var(--pink);
+}
+
+/* À l'export PDF, la page fait 1280×720 et vw/vh désignent encore la fenêtre. */
+html.print-pdf { --r-main-font-size: 26px; }
+
+.reveal-viewport {
+  background: var(--r-background-color) url("../assets/zigzag.jpg") center / cover no-repeat;
+}
+
+.reveal { font-weight: 300; }
+.reveal h1, .reveal h2 { font-style: italic; }
+.reveal strong { font-weight: 700; color: #FFFFFF; }
+
+/* Phrase d'accroche sous un titre. */
+.reveal .lead { color: var(--pink); font-style: italic; }
+.reveal .accent { color: var(--pink); }
+
+/* Le « C » à stickers de la couverture, à côté du titre. */
+.reveal img.stickers { height: 14em; margin: 0 1em 0 0; }
+
+/* Cartes côte à côte, bordure à la couleur --c. */
+.reveal .cards { gap: 0.6em; align-items: stretch; }
+.reveal .card {
+  flex: 1;
+  padding: 0.9em;
+  font-size: 0.6em;
+  text-align: left;
+  background: rgba(22, 22, 28, 0.85);
+  border: 2px solid var(--c, var(--pink));
+  border-radius: 0.6em;
+}
+.reveal .card h3 { color: var(--c, #FFFFFF); font-style: normal; }
+.reveal .card p { margin: 0.5em 0 0; }
+
+/* Bandeau des partenaires, commun à toutes les slides et répété à l'export PDF. */
+.partners {
+  position: fixed;
+  right: 1.2em;
+  bottom: 0.8em;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  pointer-events: none;
+  /* Échelle de tout le bandeau : logos, × et espacements suivent. */
+  font-size: 1.5em;
+}
+.partners img { display: block; }
+.partners .onepoint { height: 0.6em; }
+.partners .centrale { height: 1.2em; }
+.partners .aws { height: 1em; }
+.partners span { color: #FFFFFF; font-size: 0.5em; }

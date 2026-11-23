@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · Before Thursday</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>See you on Thursday</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:15 (cumul 0:15). L'encadrant de la salle, dans chaque grande salle, à la fin du développement. Cinq minutes en tout : trois messages, pas plus.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Wednesday off, Thursday full</h2>
+  <p class="lead">Wednesday: learning expedition in Bordeaux. No code.</p>
+  <table>
+    <tr><td>9:00</td><td><strong>Talk, in the salon</strong></td><td>An AI agent writing code, live.</td></tr>
+    <tr><td>9:30</td><td><strong>Agent workshop</strong></td><td>You write its tools, then set it on your feature.</td></tr>
+    <tr><td>11:15</td><td><strong>Integration</strong></td><td>Your pull requests go in.</td></tr>
+    <tr><td>14:00</td><td><strong>Last hour</strong></td><td>Finish your feature.</td></tr>
+    <tr><td>15:00</td><td><strong>Code freeze</strong></td><td>Nothing more is merged.</td></tr>
+    <tr><td>15:10</td><td><strong>Presenters</strong></td><td>Then the pitch workshop.</td></tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 2:30 (cumul 2:45).</p>
+    <p>Mercredi : learning expedition dans Bordeaux. Rien n'est attendu côté code.</p>
+    <p>Jeudi, dans l'ordre :</p>
+    <ul>
+      <li>9h00, tous au salon : le talk, une démo d'agent de code au travail.</li>
+      <li>9h30, dans votre salle : l'atelier agent. Vous écrivez les outils d'un agent, puis vous le lâchez sur un test rouge de votre feature.</li>
+      <li>11h15 : l'intégration, les pull requests de la feature entrent dans main.</li>
+      <li>14h00 : la dernière heure de code, pour finir la feature (carte blanche pour celles qui ont fini).</li>
+      <li>15h00 : gel du code.</li>
+      <li>15h10, au salon : les deux présentateurs de chaque équipe sont désignés, puis l'atelier pitch.</li>
+    </ul>
+  </aside>
+</section>
+
+<section>
+  <h2>Thursday, 15:00</h2>
+  <p class="lead">The code freeze. The branches are locked: what is on main at 15:00 is what you present on Friday.</p>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 4:45).</p>
+    <p>Le dire sans détour : les branches sont verrouillées par l'infra à 15h00 précises. Ce qui n'est pas fusionné à 15h00 n'existe pas pour le jury.</p>
+    <p>Conseil à donner : faire entrer l'essentiel pendant l'intégration de 11h15, et garder l'après-midi pour finir, pas pour commencer.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>Thursday, 9:00</h2>
+      <p>In the salon.<br>Enjoy your learning expedition!</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:15 (cumul 5:00).</p>
+    <p>Bonne soirée, bonne learning expedition.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes],
+  });
+</script>
+</body>
+</html>

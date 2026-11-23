@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coding Week 2026 · GitHub workshop</title>
+  <link rel="stylesheet" href="vendor/reveal.js/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal.js/theme/black.css">
+  <link rel="stylesheet" href="theme/coding-week.css">
+  <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div style="text-align: left;">
+      <h1>GitHub workshop: from fork to merge</h1>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:30 (cumul 0:30). Le speaker de la salle, dans chaque grande salle.</p>
+    <p>Préparé avant 11h10, sur le portable du speaker : son fork du dépôt d'entraînement de la salle, déjà cloné, et un premier push déjà fait pour que git ait retenu la connexion à GitHub (la fenêtre de connexion ne s'ouvrira pas pendant la démo). Le terminal est ouvert dans le dossier du clone, l'éditeur et le navigateur à côté.</p>
+    <p>En semaine 1, ils ont utilisé git sur leur machine. Aujourd'hui, on travaille à plusieurs sur un dépôt distant, comme toute la semaine. Ce qui est vraiment nouveau pour eux : le fork, la pull request, et surtout la revue en ligne.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Why do we need to know the basics?</h2>
+  <ul>
+    <li>It's how software is really built.</li>
+    <li>It makes teamwork possible.</li>
+    <li>Code review builds quality and learning (find bugs early, share good ideas…)</li>
+    <li>Conflicts stop being scary and become manageable</li>
+    <li>History and safety: everything is recorded, can be explained and can be undone.</li>
+  </ul>
+  <aside class="notes">
+    <p>Minutage : 2:30 (cumul 3:00).</p>
+    <p>Parcourir les sept étapes de gauche à droite, tranquillement.</p>
+    <ul>
+      <li>Fork : votre propre copie du projet, sur GitHub. Un clic, une fois.</li>
+      <li>Clone : vous récupérez votre fork sur votre portable.</li>
+      <li>Branch : votre brouillon. On ne travaille jamais directement sur main.</li>
+      <li>Push : vous commitez, puis vous envoyez votre branche sur votre fork.</li>
+      <li>Pull request : vous demandez que votre travail entre dans le main du projet.</li>
+      <li>Review : quelqu'un d'autre lit votre code et le commente.</li>
+      <li>Merge : c'est dans main, tout le monde le récupère.</li>
+    </ul>
+    <p>Faire remarquer les deux allers-retours : GitHub, puis le portable, puis GitHub à nouveau.</p>
+    <p>Rassurer : ce matin, on s'entraîne sur un dépôt à part, un par salle. Rien de ce que vous y faites ne peut casser quoi que ce soit. Cet après-midi à 15h15, votre équipe fera exactement ce chemin sur le vrai projet.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The highway to the main branch</h2>
+  <p class="lead">All week, this is how your code reaches the project.</p>
+  <ol>
+    <li><strong>Fork</strong>: your own copy, on GitHub</li>
+    <li><strong>Clone</strong>: your fork, on your laptop</li>
+    <li><strong>Branch</strong>: your draft, never main</li>
+    <li><strong>Push</strong>: commit, then send it to your fork</li>
+    <li><strong>Pull request</strong>: ask to bring it into main</li>
+    <li><strong>Review</strong>: someone else reads it</li>
+    <li><strong>Merge</strong>: it's in main, for everyone</li>
+  </ol>
+  <p>GitHub → Your laptop → GitHub</p>
+  <aside class="notes">
+    <p>Minutage : 2:30 (cumul 3:00).</p>
+    <p>Parcourir les sept étapes de gauche à droite, tranquillement.</p>
+    <ul>
+      <li>Fork : votre propre copie du projet, sur GitHub. Un clic, une fois.</li>
+      <li>Clone : vous récupérez votre fork sur votre portable.</li>
+      <li>Branch : votre brouillon. On ne travaille jamais directement sur main.</li>
+      <li>Push : vous commitez, puis vous envoyez votre branche sur votre fork.</li>
+      <li>Pull request : vous demandez que votre travail entre dans le main du projet.</li>
+      <li>Review : quelqu'un d'autre lit votre code et le commente.</li>
+      <li>Merge : c'est dans main, tout le monde le récupère.</li>
+    </ul>
+    <p>Faire remarquer les deux allers-retours : GitHub, puis le portable, puis GitHub à nouveau.</p>
+    <p>Rassurer : ce matin, on s'entraîne sur un dépôt à part, un par salle. Rien de ce que vous y faites ne peut casser quoi que ce soit. Cet après-midi à 15h15, votre équipe fera exactement ce chemin sur le vrai projet.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Steps 1 to 4: fork, then code</h2>
+  <p class="lead">Start from your room's training repository.</p>
+  <pre><code class="language-bash" data-trim data-noescape>
+# 1. On GitHub: click Fork
+# 2. Clone your fork, once
+git clone https://github.com/onepoint-coding-week/training-github-salon.git (or cabane!)
+# 3. Your branch
+git switch -c alice-motto
+# 4. Commit and push
+git add students/alice.md
+git commit -m "Add alice"
+git push -u origin alice-motto
+  </code></pre>
+  <table>
+    <tr>
+      <td><strong>Your change</strong></td>
+      <td>Create a file students/name.md. Write your motto!</td>
+    </tr>
+    <tr>
+      <td><strong>Before you commit</strong></td>
+      <td>git status should list one file: yours!</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 3:00 (cumul 6:00).</p>
+    <p>Démonstration en direct au vidéoprojecteur, puis revenir sur cette slide : elle reste affichée pendant que les étudiants travaillent.</p>
+    <p>À COMPLÉTER : le lien du dépôt d'entraînement de la salle, à poster sur le canal Teams et à écrire au tableau avant 11h10.</p>
+    <p>Le fork et le clone sont déjà faits sur le portable du speaker : montrer le bouton Fork sur GitHub et la ligne git clone sur la slide, sans les refaire. La démo commence à la création du fichier : créer students/&lt;son login&gt;.md, git switch -c, git add, git status, git commit, git push.</p>
+    <p>Points à dire en tapant :</p>
+    <ul>
+      <li>On clone SON fork, pas le dépôt de la salle : l'adresse contient son propre login GitHub. Sinon, le push sera refusé.</li>
+      <li>Au premier push, git demande de se connecter à GitHub. Le dire, sans le montrer : une fenêtre propose de se connecter par le navigateur ; si git demande un mot de passe, c'est le Personal Access Token créé avant le lundi, pas le mot de passe GitHub. Git le retient ensuite.</li>
+      <li>Chacun crée son propre fichier, à son login, dans students/. Comme personne ne touche au fichier d'un autre, les pull requests de la salle entrent sans conflit. Le conflit, on le provoque à 11h55, exprès.</li>
+      <li>« alice » est un exemple : chacun met son propre login.</li>
+      <li>git status avant de commiter : un seul fichier doit apparaître.</li>
+    </ul>
+  </aside>
+</section>
+
+<section>
+  <h2>Steps 5 to 7: on GitHub</h2>
+  <p class="lead">The review is the new part: read the code, say something useful.</p>
+  <ol start="5">
+    <li><strong>Open your pull request</strong>: On your fork, click Compare &amp; pull request. Check it goes to the room's repository, main. A clear title, then Create.</li>
+    <li><strong>Review your neighbour's</strong>: Open their pull request, tab Files changed. Click + on a line, leave a comment. A question or an idea, not just "OK".</li>
+    <li><strong>Reply, then merge</strong>: Answer the comments you got. Once it's approved, it gets merged. Your file is now in main.</li>
+  </ol>
+  <aside class="notes">
+    <p>Minutage : 3:00 (cumul 9:00).</p>
+    <p>En direct, seulement l'étape 5 : après le push, GitHub affiche sur le fork un bandeau « Compare &amp; pull request ». Cliquer, vérifier en haut que la pull request va bien vers le dépôt de la salle, branche main. Un titre clair, une phrase de description, Create pull request.</p>
+    <p>Les étapes 6 et 7 se montrent sur la slide, sans les faire :</p>
+    <ul>
+      <li>Côté relecteur : l'onglet Files changed, le « + » qui apparaît au survol d'une ligne, un commentaire. Un commentaire obligatoire par personne. Un « OK » ne compte pas : une question, une remarque, une idée.</li>
+      <li>L'auteur répond aux commentaires, puis la pull request est fusionnée. Qui fusionne : le préciser à l'oral, selon l'organisation de la salle.</li>
+    </ul>
+    <p>La relecture se fait entre voisins : chacun relit la pull request de son voisin de gauche, par exemple. Le dire, sinon tout le monde relit la même.</p>
+    <p>Si le temps manque, ne pas sacrifier la revue : c'est la vraie nouveauté.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Theory is over! Now you apply it.</h2>
+  <p class="lead">Stuck? Ask your neighbour first, then raise your hand.</p>
+  <table>
+    <tr>
+      <td><strong>Steps 1 to 5</strong></td>
+      <td>Fork, clone, your file, push, then open your pull request.</td>
+    </tr>
+    <tr>
+      <td><strong>Steps 6 and 7</strong></td>
+      <td>Review your neighbour's pull request, one comment each. Reply to yours.</td>
+    </tr>
+    <tr>
+      <td><strong>Back here</strong></td>
+      <td>A conflict, on purpose, solved together.</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 1:00 (cumul 10:00).</p>
+    <p>Pendant le travail, laisser affichée la slide des commandes (slide 3) ou celle-ci, selon ce que la salle demande.</p>
+    <p>Les plus à l'aise aident leurs voisins : le dire tel quel. Les encadrants circulent. Les blocages les plus fréquents :</p>
+    <ul>
+      <li>le mot de passe : c'est le Personal Access Token, pas le mot de passe GitHub ;</li>
+      <li>le push refusé : l'étudiant a cloné le dépôt de la salle au lieu de son fork ; regarder l'adresse avec git remote -v ;</li>
+      <li>un fichier créé au mauvais endroit, ou une pull request qui vise le mauvais dépôt.</li>
+    </ul>
+    <p>À 11h53, les encadrants annoncent « Back in 2 minutes » dans les équipes ; à 11h55, reprendre la salle pour le conflit.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Conflict time!</h2>
+  <p class="lead">Let's break it on purpose, then fix it together!</p>
+  <ul>
+    <li>Two branches</li>
+    <li>The same file</li>
+    <li>The same line</li>
+    <li>Two pull requests</li>
+  </ul>
+  <aside class="notes">
+    <p>Minutage : 0:15 (début de la clôture, 5 minutes en tout).</p>
+    <p>Deux minutes avant (11h53), les encadrants passent dans les équipes : « Back in 2 minutes ». Le speaker affiche déjà cette slide. À 11h55, reprendre la salle. Si des pull requests ne sont pas encore fusionnées, pas grave : elles le seront après.</p>
+    <p>Préparé avant 11h55, sur le dépôt d'entraînement de la salle : deux branches, merge-me-first et conflict-here-I-come, qui changent toutes les deux la même ligne de README.md, la deuxième (« This is going to be a fun week. »), et deux pull requests ouvertes vers main. Cinq minutes, c'est court : fusionner merge-me-first juste avant, et ne faire en direct que la résolution. Les slides suivantes servent de support et de secours.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>So, what happened?</h2>
+  <p class="lead">Git merges changes on its own, as long as they touch different lines.</p>
+  <table>
+    <tr>
+      <td>README.md, line 2</td>
+      <td>This is going to be a fun week.</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>merge-me-first</code></td>
+      <td>This is going to be an amazing week, merge me first!</td>
+      <td><span class="accent">Merged first</span></td>
+    </tr>
+    <tr>
+      <td><code>conflict-here-I-come</code></td>
+      <td>This is going to be a legendary week, conflict here I come!</td>
+      <td><span class="accent">Conflict</span></td>
+    </tr>
+  </table>
+  <p>merge-me-first is in main. Git can't guess if conflict-here-I-come should replace it, so it asks.</p>
+  <aside class="notes">
+    <p>Minutage : 1:00 (cumul 1:15).</p>
+    <p>Montrer la pull request merge-me-first, déjà fusionnée. Ouvrir conflict-here-I-come : GitHub affiche « This branch has conflicts that must be resolved ». Le bouton Merge est grisé.</p>
+    <p>L'expliquer simplement : les deux ont changé la même ligne, et git ne sait pas laquelle garder. Alors il pose la question, et c'est l'auteur de la deuxième pull request qui y répond. Personne n'a fait de faute.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>Let's fix it on GitHub</h2>
+  <p class="lead">On conflict-here-I-come, click Resolve conflicts.</p>
+  <pre><code class="language-plaintext" data-trim data-noescape>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; conflict-here-I-come
+This is going to be a legendary week, conflict here I come!
+=======
+This is going to be an amazing week, merge me first!
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main
+  </code></pre>
+  <p>Keep one line, or a mix of both:</p>
+  <pre><code class="language-plaintext" data-trim data-noescape>
+This is going to be an amazing, legendary week!
+  </code></pre>
+  <ol>
+    <li>Click Resolve conflicts on the pull request.</li>
+    <li>Keep the line you want and delete the &lt;&lt;&lt;, === and &gt;&gt;&gt; markers.</li>
+    <li>Click Mark as resolved, then Commit merge. It can be merged again.</li>
+  </ol>
+  <aside class="notes">
+    <p>Minutage : 2:00 (cumul 3:15).</p>
+    <p>En direct, sur la pull request conflict-here-I-come :</p>
+    <ul>
+      <li>Cliquer sur « Resolve conflicts ». GitHub ouvre le fichier avec les deux versions de la ligne, entre les marques &lt;&lt;&lt;&lt;&lt;&lt;&lt;, ======= et &gt;&gt;&gt;&gt;&gt;&gt;&gt; : en haut celle de conflict-here-I-come, en bas celle déjà dans main.</li>
+      <li>Demander à la salle laquelle garder, laisser proposer quelques secondes.</li>
+      <li>Écrire un mélange des deux, par exemple « This is going to be an amazing, legendary week! », et effacer les trois marques.</li>
+      <li>« Mark as resolved », puis « Commit merge ». Le conflit disparaît, la pull request peut de nouveau être fusionnée.</li>
+    </ul>
+    <p>Si GitHub ne propose pas de résoudre dans le navigateur (conflit trop compliqué) : cette semaine, appeler un encadrant, qui le fera avec eux.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>On the real project</h2>
+  <table>
+    <tr>
+      <td><strong>Between teams</strong></td>
+      <td>No conflict possible: each team only changes its own folder, features/team_XX/.</td>
+    </tr>
+    <tr>
+      <td><strong>Inside your team</strong></td>
+      <td>Two of you edit the same lines of service.py? That's a conflict, fixed like today.</td>
+    </tr>
+    <tr>
+      <td><strong>Fewer conflicts</strong></td>
+      <td>Keep pull requests small and merge them soon. Tell each other who's on which file.</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Minutage : 1:00 (cumul 4:15).</p>
+    <p>Aller vite. Sur le vrai projet, chaque équipe ne modifie que son dossier features/team_XX/ : deux équipes ne peuvent pas entrer en conflit. Les conflits arriveront à l'intérieur d'une équipe, quand deux personnes touchent les mêmes lignes du même fichier, typiquement service.py.</p>
+    <p>Deux habitudes suffisent presque toujours : de petites pull requests, fusionnées vite, et se dire dans l'équipe qui travaille sur quel fichier.</p>
+    <p>Annoncer 15h15 : même chemin, cette fois depuis le fork de l'équipe vers le vrai projet.</p>
+  </aside>
+</section>
+
+<section>
+  <div class="r-hstack">
+    <img class="stickers" src="assets/stickers.webp" alt="">
+    <div>
+      <h2>Questions?</h2>
+      <p>Ask now, or anytime in the Teams channel.</p>
+      <p>Next: a tour of the project.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>Minutage : 0:45 (cumul 5:00).</p>
+    <p>Une ou deux questions, pas plus : les autres sur le canal Teams. À 12h00, le speaker enchaîne sur l'architecture du cœur et la démo live, dans la même salle.</p>
+  </aside>
+</section>
+
+</div>
+
+<footer class="partners" aria-label="Partners">
+  <img class="onepoint" src="assets/logos/onepoint.svg" alt="onepoint">
+  <span aria-hidden="true">×</span>
+  <img class="centrale" src="assets/logos/centralesupelec.svg" alt="CentraleSupélec">
+  <span aria-hidden="true">×</span>
+  <img class="aws" src="assets/logos/aws.png" alt="powered by AWS">
+</footer>
+</div>
+<script src="vendor/reveal.js/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes.js"></script>
+<script src="vendor/reveal.js/plugin/highlight.js"></script>
+<script>
+  // À l'export PDF, une page fixe de 1280×720 ; à l'écran, le deck occupe toute la fenêtre.
+  const printing = /print-pdf/.test(window.location.search);
+  Reveal.initialize({
+    width: printing ? 1280 : "100%",
+    height: printing ? 720 : "100%",
+    hash: true,
+    controls: false,
+    plugins: [RevealNotes, RevealHighlight],
+  });
+</script>
+</body>
+</html>
