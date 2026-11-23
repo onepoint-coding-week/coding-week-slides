@@ -18,7 +18,7 @@
   <div class="r-hstack">
     <img class="stickers" src="assets/stickers.webp" alt="">
     <div style="text-align: left;">
-      <h1>AI tools: how they really work</h1>
+      <h1>AI agents: how they actually work</h1>
     </div>
   </div>
   <aside class="notes">
@@ -29,7 +29,7 @@
 
 <section>
   <h2>Inside the box</h2>
-  <p class="lead">ChatGPT, Claude, Copilot, Gemini: different names, the same engine. A language model.</p>
+  <p class="lead">ChatGPT, Claude, Copilot, Gemini... Different names, the same engine : a language model.</p>
   <aside class="notes">
     <p>Minutage : 0:30.</p>
     <p>Demander à main levée : qui a déjà utilisé ChatGPT ? Claude ? Copilot ? Presque tout le monde. Qui sait ce qui se passe quand on appuie sur Entrée ? Beaucoup moins. C'est l'objet de la première partie.</p>
@@ -61,7 +61,7 @@
       <li>Add it. Start again.</li>
     </ol>
   </div>
-  <p>It doesn't know. It predicts.</p>
+  <p>It doesn't <b>know</b>. It predicts.</p>
   <aside class="notes">
     <p>Minutage : 3:00.</p>
     <p>Lire la phrase de gauche et faire compléter la salle : « New Year ». Le modèle fait exactement ça, avec des probabilités apprises sur une énorme quantité de textes. Il choisit un mot, l'ajoute, et recommence. Une réponse entière, c'est cette boucle, mot après mot.</p>
@@ -71,45 +71,51 @@
 </section>
 
 <section>
-  <h2>Its only memory: the context</h2>
+  <h2>The model's memory: the context</h2>
   <p class="lead">The model sees one thing: the text sent with your question.</p>
-  <div class="r-hstack">
-    <table>
-      <tr>
-        <td><strong>Hidden instructions</strong></td>
-        <td>set by the tool</td>
-      </tr>
-      <tr>
-        <td><strong>The conversation so far</strong></td>
-        <td>every message, both ways</td>
-      </tr>
-      <tr>
-        <td><strong>What you paste</strong></td>
-        <td>your code, your tests, an error</td>
-      </tr>
-      <tr>
-        <td><strong>Your question</strong></td>
-        <td>the last line</td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td><strong>New chat?</strong></td>
-        <td>It remembers nothing.</td>
-      </tr>
-      <tr>
-        <td><strong>Your project?</strong></td>
-        <td>It has never seen it. Paste what matters.</td>
-      </tr>
-      <tr>
-        <td><strong>Very long chat?</strong></td>
-        <td>The beginning gets lost.</td>
-      </tr>
-    </table>
-  </div>
+  <table>
+    <tr>
+      <td><strong>Hidden instructions</strong></td>
+      <td>system prompt + tools definitions</td>
+    </tr>
+    <tr>
+      <td><strong>The conversation so far</strong></td>
+      <td>every message, both ways</td>
+    </tr>
+    <tr>
+      <td><strong>Files</strong></td>
+      <td>everything that you load or paste</td>
+    </tr>
+    <tr>
+      <td><strong>Your question</strong></td>
+      <td>every new prompt</td>
+    </tr>
+  </table>
   <aside class="notes">
     <p>Minutage : 3:00.</p>
-    <p>Le « contexte », c'est tout le texte envoyé au modèle à chaque message : les instructions cachées de l'outil, toute la conversation, les fichiers collés, et la question. Le modèle n'a pas d'autre mémoire. Il ne connaît pas leur projet, il n'a pas vu leur code, sauf ce qu'on lui colle.</p>
+    <p>Le « contexte », c'est tout le texte envoyé au modèle à chaque message : les instructions cachées de l'outil, toute la conversation, les fichiers collés, et la question.</p>
+  </aside>
+</section>
+
+<section>
+  <h2>The model's memory: its limits</h2>
+  <p class="lead">Anything outside that text does not exist for it.</p>
+  <table>
+    <tr>
+      <td><strong>New chat?</strong></td>
+      <td>It remembers nothing.</td>
+    </tr>
+    <tr>
+      <td><strong>Your project?</strong></td>
+      <td>It has never seen it. Paste what matters.</td>
+    </tr>
+    <tr>
+      <td><strong>Very long chat?</strong></td>
+      <td>Crucial informations may get lost.</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    <p>Le modèle n'a pas d'autre mémoire. Il ne connaît pas leur projet, il n'a pas vu leur code, sauf ce qu'on lui colle.</p>
     <p>Conséquences pratiques :</p>
     <ul>
       <li>une nouvelle conversation repart de zéro ;</li>
@@ -118,65 +124,11 @@
     </ul>
   </aside>
 </section>
-
-<section>
-  <h2>Why it makes things up</h2>
-  <p class="lead">Plausible is not the same as true.</p>
-<pre><code class="language-python" data-trim data-noescape>
-# the AI suggests:
-names = random.shuffle_copy(names)
-# AttributeError: no such function
-</code></pre>
-  <p>Looks right. Doesn't exist.</p>
-  <ol>
-    <li>Read every line</li>
-    <li>Run the tests</li>
-    <li>Ask: why this way?</li>
-  </ol>
-  <aside class="notes">
-    <p>Minutage : 3:00.</p>
-    <p>Une « hallucination » : une réponse fausse, donnée avec assurance. Ce n'est pas un bug rare, c'est la conséquence directe de la slide précédente : le modèle produit ce qui est plausible.</p>
-    <p>En code, ça donne : une fonction de bibliothèque qui n'existe pas, un paramètre inventé, un test « oublié », un cas limite ignoré. Le code a l'air propre et ne marche pas.</p>
-    <p>La parade : ne jamais croire, toujours vérifier. Lire le code, et lancer les tests. Cette semaine, les tests sont le juge.</p>
-  </aside>
-</section>
-
 <section>
   <h2>The prompt is the spec</h2>
   <p class="lead">A vague question gets a vague answer.</p>
   <p>"write a Secret Santa draw in Python"</p>
   <p>It will guess everything.</p>
-  <table>
-    <tr>
-      <td><strong>Context</strong></td>
-      <td>a Streamlit app, file logic.py</td>
-    </tr>
-    <tr>
-      <td><strong>Task</strong></td>
-      <td>write draw_names(names, rng)</td>
-    </tr>
-    <tr>
-      <td><strong>Rules</strong></td>
-      <td>nobody gives to themselves</td>
-    </tr>
-    <tr>
-      <td><strong>Example</strong></td>
-      <td>paste the tests</td>
-    </tr>
-  </table>
-  <p>Best trick: give it the tests. They say exactly what you want.</p>
-  <aside class="notes">
-    <p>Minutage : 4:00.</p>
-    <p>Comparer les deux prompts. Le premier laisse le modèle deviner tout : le nom de la fonction, ses paramètres, les règles (personne ne s'offre un cadeau à soi-même), le format du résultat. Il devinera, et pas comme nos tests l'attendent.</p>
-    <p>Le second donne les quatre ingrédients :</p>
-    <ul>
-      <li>le contexte : quel projet, quel fichier ;</li>
-      <li>la tâche : une seule, précise ;</li>
-      <li>les contraintes : la signature, les règles, ce qui est interdit ;</li>
-      <li>un exemple ou les tests : le plus efficace de tout.</li>
-    </ul>
-    <p>C'est exactement ce qu'ils vont tester tout à l'heure avec draw_names.</p>
-  </aside>
 </section>
 
 <section>
@@ -201,7 +153,7 @@ names = random.shuffle_copy(names)
 def run_tests(path: str) -&gt; str:
     """Run pytest on this folder. Return the summary."""
 </code></pre>
-  <p>The docstring is all the model knows about the tool.</p>
+  <p>The docstring is all the model knows about a tool.</p>
   <aside class="notes">
     <p>Minutage : 3:00.</p>
     <p>Un modèle ne fait que produire du texte. Pour agir, on lui décrit des « outils » : un nom, une description, des paramètres. Quand il en a besoin, il répond par une demande : « appelle run_tests ». C'est le programme autour de lui qui exécute vraiment l'outil, puis lui renvoie le résultat. Le modèle continue avec ce résultat.</p>
@@ -263,13 +215,6 @@ description: Write a feature of the
       </tr>
     </table>
   </div>
-  <aside class="notes">
-    <p>Minutage : 3:00.</p>
-    <p>Une « skill » (chez Claude, et repris par d'autres outils) : un dossier avec un fichier SKILL.md. En haut, un nom et une description d'une ligne. En dessous, les instructions détaillées, et parfois des scripts ou des modèles de fichiers.</p>
-    <p>L'agent ne lit au départ que la description. Quand une tâche correspond, il ouvre la skill et suit ses instructions. Avantage : on n'encombre pas le contexte avec tout, tout le temps (rappel de la slide sur le contexte).</p>
-    <p>Exemple : une skill « secret-santa-feature » qui explique les règles du projet. Autres exemples réels : créer un PowerPoint, remplir un PDF, suivre la charte graphique d'une entreprise.</p>
-    <p>Pas d'utilisation de skills cette semaine : c'est pour comprendre ce qu'ils verront ailleurs.</p>
-  </aside>
 </section>
 
 <section>
@@ -323,33 +268,20 @@ description: Write a feature of the
 </section>
 
 <section>
-  <h2>Your turn, with three rules</h2>
-  <p class="lead">The Assistant is open. Ask it to write draw_names, then run the tests.</p>
-  <div class="r-hstack cards">
-    <div class="card" style="--c: var(--pink);">
-      <h3>1. You own the code</h3>
-      <p>Explain every line you ship.</p>
-    </div>
-    <div class="card" style="--c: var(--purple);">
-      <h3>2. Tests are the judge</h3>
-      <p>Coverage never goes down.</p>
-    </div>
-    <div class="card" style="--c: var(--violet);">
-      <h3>3. No secrets</h3>
-      <p>No password, token or personal data.</p>
-    </div>
-  </div>
-  <p>Use the recipe: context, task, rules, tests.</p>
-  <p>Red tests? Improve your prompt, not the tests.</p>
+  <h2>Your turn !</h2>
+  <p class="lead">Find a way to <b>plug the GitHub MCP server</b> into your assistant.</p>
+  <p>Then ask it: what state is my fork in? Are the pipelines green on my PRs?</p>
+  <p>Search, read the docs, help each other.</p>
   <aside class="notes">
     <p>Minutage : 3:00.</p>
     <p>Les trois règles de la semaine :</p>
     <ol>
       <li>Vous restez responsables du code que vous livrez. « C'est l'IA qui l'a écrit » n'est pas une réponse, et vendredi, n'importe qui peut être présentateur.</li>
       <li>Les tests sont le juge, et la couverture ne doit jamais baisser.</li>
-      <li>Jamais de mot de passe, de token ou de donnée personnelle dans un prompt.</li>
+      <li>Jamais de mot de passe, de token ou de donnée personnelle dans un prompt. Le serveur MCP GitHub demande un token : il va dans la config du serveur, jamais dans un prompt ni dans un commit.</li>
     </ol>
-    <p>Puis l'exercice : avec la page « Assistant », faire écrire draw_names, lancer les tests fournis. Appliquer ce qu'on vient de voir : contexte, tâche, règles, tests collés.</p>
+    <p>Puis l'exercice : trouver par eux-mêmes comment brancher le serveur MCP GitHub sur leur assistant. On ne donne pas la procédure, c'est à eux de chercher (doc du serveur, doc de leur outil, entraide entre équipes).</p>
+    <p>Une fois branché, ils demandent à l'assistant l'état de leur fork (retard sur l'amont, branches, PRs ouvertes) et si les pipelines sont verts sur leurs PRs. C'est la mise en pratique directe de la slide MCP.</p>
   </aside>
 </section>
 
@@ -358,8 +290,6 @@ description: Write a feature of the
     <img class="stickers" src="assets/stickers.webp" alt="">
     <div>
       <h2>Questions?</h2>
-      <p>Then open the Assistant.</p>
-      <p>Thursday: you build an agent's tools yourself.</p>
     </div>
   </div>
   <aside class="notes">
