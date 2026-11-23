@@ -18,12 +18,25 @@
     a { display: flex; gap: 1rem; padding: .75rem 1rem; border-radius: .5rem; color: var(--fg); text-decoration: none; background: rgba(12, 10, 16, .7); margin-bottom: .4rem; border-left: 3px solid transparent; }
     a:hover, a:focus-visible { border-left-color: var(--pink); color: #fff; }
     .num { color: var(--pink); font-weight: 900; min-width: 2ch; }
+    header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    header p.sub { margin: 0; }
+    figure.qr { margin: 0; text-align: center; }
+    figure.qr img { display: block; width: 9rem; height: 9rem; border-radius: .5rem; }
+    figure.qr figcaption { color: var(--grey); font-size: .75rem; margin-top: .4rem; }
   </style>
 </head>
 <body>
   <main>
-    <h1>Coding Week 2026</h1>
-    <p class="sub">Slides · onepoint × CentraleSupélec</p>
+    <header>
+      <div>
+        <h1>Coding Week 2026</h1>
+        <p class="sub">Slides · onepoint × CentraleSupélec</p>
+      </div>
+      <figure class="qr">
+        <img src="assets/qrcode.svg" alt="QR code to onepoint-coding-week.github.io/coding-week-slides">
+        <figcaption>Scan to open the slides</figcaption>
+      </figure>
+    </header>
 
     <h2>Monday</h2>
     <ul>
