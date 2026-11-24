@@ -37,6 +37,13 @@ html.print-pdf { --r-main-font-size: 26px; }
 }
 
 .reveal { font-weight: 300; }
+
+/* Marge intérieure des slides, en plus de la marge reveal.js (4 %), pour éloigner le texte des bords. */
+.reveal .slides > section:not(.stack),
+.reveal .slides > section.stack > section {
+  box-sizing: border-box;
+  padding: 1em 2em;
+}
 .reveal h1, .reveal h2 { font-style: italic; }
 .reveal strong { font-weight: 700; color: #FFFFFF; }
 
